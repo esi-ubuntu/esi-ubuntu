@@ -17,6 +17,11 @@ function candidateErrors(c,p){
  for(const k of scoreNames){ if(k in c && (typeof c[k]!=='number'||c[k]<0||c[k]>100)) e.push(`${p}.${k} must be 0..100`); }
  if(typeof c.symbol!=='string'||!c.symbol) e.push(`${p}.symbol required`);
  if(c.risk_reward!==null && typeof c.risk_reward!=='number') e.push(`${p}.risk_reward must be number|null`);
+ const prime=['PRIME_CANDIDATE','POTENTIAL_PRIME','HIGH_CONVICTION'];
+ if(prime.includes(c.label) && !(c.core_fundamental_score>=70 && c.technical_score>=70 && c.tape_score>=65 && c.risk_reward>=2 && c.critical_news_risk===false)) e.push(`${p}.${c.label} thresholds not met`);
+ if(c.label==='MOMENTUM_HUNTER' && !(c.technical_score>=75 && c.tape_score>=75 && c.risk_reward>=2 && c.critical_news_risk===false)) e.push(`${p}.MOMENTUM_HUNTER thresholds not met`);
+ if(c.label==='FUNDAMENTAL_GEM' && !(c.core_fundamental_score>=80)) e.push(`${p}.FUNDAMENTAL_GEM threshold not met`);
+ if(c.label==='EARLY_CANDIDATE' && !(c.core_fundamental_score>=70)) e.push(`${p}.EARLY_CANDIDATE fundamental threshold not met`);
  return e;
 }
 export function validateDocument(kind,value){
@@ -35,7 +40,16 @@ export function validateDocument(kind,value){
    if(!Array.isArray(value[name])) errors.push(`${name} must be array`);
    else value[name].forEach((c,i)=>errors.push(...candidateErrors(c,`${name}[${i}]`)));
  }
- if(kind==='fundamental' && (typeof value.core_fundamental_score!=='number'||value.core_fundamental_score<0||value.core_fundamental_score>100)) errors.push('core_fundamental_score must be 0..100');
+ if(kind==='fundamental'){
+   if(typeof value.core_fundamental_score!=='number'||value.core_fundamental_score<0||value.core_fundamental_score>100) errors.push('core_fundamental_score must be 0..100');
+   if(typeof value.previous_score==='number' && value.previous_score!==value.core_fundamental_score){
+     const delta=value.core_fundamental_score-value.previous_score;
+     if(value.change!==delta) errors.push('change must equal score delta');
+     if(!value.change_reason?.trim()) errors.push('change_reason required when score changes');
+     if(!value.change_date?.trim()) errors.push('change_date required when score changes');
+     if(!Array.isArray(value.evidence)||value.evidence.length===0) errors.push('evidence required when score changes');
+   }
+ }
  return {valid:errors.length===0,errors};
 }
 export function validateFundamentalTransition(previous,next){
