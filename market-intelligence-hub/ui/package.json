@@ -1,0 +1,1 @@
+{"name":"market-intelligence-hub-ui","private":true,"type":"module","scripts":{"test":"node --test src/*.test.mjs","build":"node build.mjs"}}

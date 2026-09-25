@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { validateDocument, validateFundamentalTransition } from '../scripts/lib/validation.mjs';
+const read=async p=>JSON.parse(await readFile(new URL(`../${p}`,import.meta.url),'utf8'));
+test('valid scout passes',async()=>{const r=validateDocument('scout',await read('fixtures/valid/scout.json'));assert.equal(r.valid,true);});
+test('score above 100 fails',async()=>{const v=await read('fixtures/valid/scout.json');v.candidates[0].technical_score=101;const r=validateDocument('scout',v);assert.equal(r.valid,false);assert.match(r.errors.join('\n'),/technical_score/);});
+test('auditor-only field in scout fails',async()=>{const v=await read('fixtures/valid/scout.json');v.scout_report_found=true;const r=validateDocument('scout',v);assert.equal(r.valid,false);assert.match(r.errors.join('\n'),/unexpected/);});
+test('invalid report id fails',async()=>{const v=await read('fixtures/valid/scout.json');v.report_id='bad';const r=validateDocument('scout',v);assert.equal(r.valid,false);assert.match(r.errors.join('\n'),/report_id/);});
+test('fundamental score change requires metadata and evidence',async()=>{const prev=await read('fixtures/valid/fundamental.json');const next={...prev,core_fundamental_score:90,evidence:[],change_reason:'',change:6};const r=validateFundamentalTransition(prev,next);assert.equal(r.valid,false);assert.match(r.errors.join('\n'),/evidence/);});
+test('unchanged fundamental score may remain without change evidence',async()=>{const prev=await read('fixtures/valid/fundamental.json');const next={...prev,previous_score:null,change:0,change_reason:'',evidence:[]};const r=validateFundamentalTransition(prev,next);assert.equal(r.valid,true);});
+test('prime label fails when thresholds are not met',async()=>{const v=await read('fixtures/valid/scout.json');v.candidates[0].label='PRIME_CANDIDATE';v.candidates[0].core_fundamental_score=60;const r=validateDocument('scout',v);assert.equal(r.valid,false);assert.match(r.errors.join('\n'),/PRIME_CANDIDATE/);});
+test('fundamental document with changed score rejects missing evidence',async()=>{const v=await read('fixtures/valid/fundamental.json');v.core_fundamental_score=90;v.previous_score=84;v.change=6;v.change_reason='';v.change_date='2026-09-25';v.evidence=[];const r=validateDocument('fundamental',v);assert.equal(r.valid,false);assert.match(r.errors.join('\n'),/evidence|change_reason/);});

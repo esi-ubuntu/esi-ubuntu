@@ -1,0 +1,21 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://mih.local/schemas/final-report.schema.json",
+  "$comment":"Runtime invariants are additionally enforced by scripts/lib/validation.mjs",
+  "x-schema-version":"1.0",
+  "type":"object",
+  "required":["schema_version","report_id","market","generated_at","market_status","action_status","prime_candidates","data_quality"],
+  "properties":{
+    "schema_version":{"const":"1.0"},
+    "report_id":{"type":"string","pattern":"^\\d{4}-\\d{2}-\\d{2}-IR-TSE-1200$"},
+    "market":{"const":"iran_stock"},
+    "generated_at":{"type":"string"},
+    "data_quality":{"type":"object"},
+    "market_status":{"enum":["BULLISH","NEUTRAL","BEARISH"]},
+    "action_status":{"enum":["ACTIONABLE","SELECTIVE","NO_ACTION"]},
+    "prime_candidates":{"type":"array","maxItems":5},
+    "best_fundamental_gem":{},"best_early_candidate":{},"best_momentum_hunter":{},"highest_conviction":{},
+    "key_risks":{"type":"array"},"key_catalysts":{"type":"array"}
+  },
+  "additionalProperties":false
+}

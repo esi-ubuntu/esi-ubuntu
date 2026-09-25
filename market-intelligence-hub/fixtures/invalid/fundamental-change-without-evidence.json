@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "market": "iran_stock",
+  "symbol": "FMLI",
+  "core_fundamental_score": 90,
+  "classification": "very_strong",
+  "last_reviewed_at": "2026-09-25",
+  "previous_score": 81,
+  "change": 6,
+  "change_reason": "",
+  "change_date": "2026-09-25",
+  "evidence": []
+}

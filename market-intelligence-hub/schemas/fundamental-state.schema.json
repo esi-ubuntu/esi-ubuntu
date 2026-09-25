@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://mih.local/schemas/fundamental-state.schema.json",
+  "$comment":"Runtime invariants are additionally enforced by scripts/lib/validation.mjs",
+  "x-schema-version":"1.0",
+  "type":"object",
+  "required":["schema_version","market","symbol","core_fundamental_score","classification","last_reviewed_at","evidence"],
+  "properties":{
+    "schema_version":{"const":"1.0"},
+    "market":{"enum":["iran_stock","crypto"]},
+    "symbol":{"type":"string"},
+    "core_fundamental_score":{"type":"number","minimum":0,"maximum":100},
+    "classification":{"type":"string"},
+    "last_reviewed_at":{"type":"string"},
+    "previous_score":{},"change":{},"change_reason":{},"change_date":{},"evidence":{"type":"array"}
+  },
+  "additionalProperties":false
+}
