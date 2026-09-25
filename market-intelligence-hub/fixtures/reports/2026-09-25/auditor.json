@@ -1,0 +1,3 @@
+{
+  "schema_version":"1.0","report_id":"2026-09-25-IR-TSE-1200","market":"iran_stock","generated_at":"2026-09-25T12:08:00+03:30","agent":{"role":"auditor","reasoning":"max"},"scout_report_found":true,"scout_validation":[{"symbol":"FMLI","decision":"CONFIRMED"}],"missed_candidates":[],"finalists":[{"symbol":"FMLI","core_fundamental_score":84,"daily_valuation_score":78,"technical_score":77,"tape_score":75,"news_score":70,"daily_opportunity_score":77.35,"risk_reward":2.3,"critical_news_risk":false,"label":"PRIME_CANDIDATE"}],"market_action_status":"SELECTIVE","data_quality":{"not_verified":[],"conflicts":[]}
+}

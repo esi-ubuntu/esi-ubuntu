@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mih.local/schemas/auditor-report.schema.json",
+  "$comment": "Runtime invariants are additionally enforced by scripts/lib/validation.mjs",
+  "x-schema-version": "1.0",
+  "type": "object",
+  "required": ["schema_version","report_id","market","generated_at","agent","scout_report_found","scout_validation","missed_candidates","finalists","market_action_status","data_quality"],
+  "properties": {
+    "schema_version":{"const":"1.0"},
+    "report_id":{"type":"string","pattern":"^\\d{4}-\\d{2}-\\d{2}-IR-TSE-1200$"},
+    "market":{"const":"iran_stock"},
+    "generated_at":{"type":"string"},
+    "data_quality":{"type":"object"},
+    "agent":{"type":"object"},
+    "scout_report_found":{"type":"boolean"},
+    "scout_validation":{"type":"array"},
+    "missed_candidates":{"type":"array"},
+    "finalists":{"type":"array","maxItems":5},
+    "market_action_status":{"enum":["ACTIONABLE","SELECTIVE","NO_ACTION"]}
+  },
+  "additionalProperties": false
+}

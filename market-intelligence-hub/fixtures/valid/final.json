@@ -1,0 +1,5 @@
+{
+  "schema_version":"1.0","report_id":"2026-09-25-IR-TSE-1200","market":"iran_stock","generated_at":"2026-09-25T12:10:00+03:30","market_status":"NEUTRAL","action_status":"SELECTIVE",
+  "prime_candidates":[{"symbol":"FMLI","core_fundamental_score":84,"daily_valuation_score":78,"technical_score":77,"tape_score":75,"news_score":70,"daily_opportunity_score":77.35,"risk_reward":2.3,"critical_news_risk":false,"label":"PRIME_CANDIDATE"}],
+  "best_fundamental_gem":"FMLI","best_early_candidate":null,"best_momentum_hunter":null,"highest_conviction":"FMLI","key_risks":[],"key_catalysts":[],"data_quality":{"not_verified":[],"conflicts":[]}
+}

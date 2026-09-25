@@ -1,0 +1,3 @@
+import test from 'node:test'; import assert from 'node:assert/strict';
+import { renderDashboard } from './app.mjs';
+test('renders market/action status, ranking and provisional badge',()=>{const html=renderDashboard({mode:'provisional',report:{report_id:'2026-09-25-IR-TSE-1200',market_status:'NEUTRAL',action_status:'SELECTIVE',prime_candidates:[{symbol:'FMLI',core_fundamental_score:84,technical_score:77,tape_score:75,news_score:70,daily_opportunity_score:77.35,label:'POTENTIAL_PRIME'}]}}); assert.match(html,/NEUTRAL/);assert.match(html,/SELECTIVE/);assert.match(html,/FMLI/);assert.match(html,/Provisional/i);});

@@ -1,0 +1,47 @@
+name: Market Intelligence Hub
+on:
+  pull_request:
+    paths:
+      - 'market-intelligence-hub/**'
+      - '.github/workflows/market-intelligence-hub.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'market-intelligence-hub/**'
+      - '.github/workflows/market-intelligence-hub.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: market-intelligence-hub
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm test
+      - run: node scripts/validate-reports.mjs
+      - run: node scripts/build-index.mjs
+      - run: node scripts/prepare-ui-data.mjs
+      - run: npm ci --prefix ui
+      - run: npm test --prefix ui
+      - run: npm run build --prefix ui
+      - run: bash -n scripts/deploy-ui.sh
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: [self-hosted, linux, x64]
+    defaults:
+      run:
+        working-directory: market-intelligence-hub
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: node scripts/prepare-ui-data.mjs
+      - run: npm ci --prefix ui
+      - run: npm run build --prefix ui
+      - run: MIH_DEPLOY_DIR="${MIH_DEPLOY_DIR:-/var/www/market-intelligence-hub}" bash scripts/deploy-ui.sh
