@@ -13,9 +13,13 @@ on:
       - 'projects/devops-log-investigator/**'
       - '.github/workflows/devops-log-investigator-ci.yml'
 
+permissions:
+  contents: read
+
 jobs:
-  guard-tests:
+  verify:
     runs-on: self-hosted
+    timeout-minutes: 30
     defaults:
       run:
         working-directory: projects/devops-log-investigator
@@ -25,11 +29,27 @@ jobs:
 
       - name: Prepare Python test environment
         run: |
+          rm -rf .venv
           python3 -m venv .venv
           .venv/bin/python -m pip install --upgrade pip
-          .venv/bin/pip install pytest pyyaml
+          .venv/bin/pip install -r investigator/requirements.txt pytest pytest-asyncio
 
-      - name: Run policy guard tests
+      - name: Run complete unit and acceptance suite
         env:
           PYTHONPATH: investigator
-        run: .venv/bin/pytest investigator/tests/test_policy.py -q
+        run: .venv/bin/pytest -q
+
+      - name: Validate shell and Python syntax
+        run: |
+          bash -n scripts/*.sh
+          .venv/bin/python -m compileall -q investigator/app
+
+      - name: Validate four-image Compose
+        run: |
+          docker compose version
+          docker compose --env-file config/.env.example -f deploy/compose.yaml config >/dev/null
+
+      - name: Build Investigator image
+        run: |
+          docker build -t "devops-log-investigator/investigator:${GITHUB_SHA}" investigator
+          docker image inspect "devops-log-investigator/investigator:${GITHUB_SHA}" >/dev/null
