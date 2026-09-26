@@ -124,5 +124,8 @@ networks:
 
 volumes:
   open-webui-data:
+    name: dli-open-webui-data
   ollama-data:
+    name: dli-ollama-data
   investigator-audit:
+    name: dli-investigator-audit
