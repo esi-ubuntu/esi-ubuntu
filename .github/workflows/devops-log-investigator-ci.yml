@@ -1,6 +1,7 @@
 name: DevOps Log Investigator CI
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - feat/devops-log-investigator
