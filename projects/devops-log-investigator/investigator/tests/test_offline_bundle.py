@@ -109,3 +109,4 @@ def test_builder_is_staging_only_and_exports_exact_four_images_plus_model():
     assert "docker save" in text
     assert "ollama pull" in text
     assert "SHA256SUMS" in text
+    assert "chmod 0755" in text
