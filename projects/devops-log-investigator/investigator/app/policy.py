@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fnmatch import fnmatchcase
 from pathlib import Path
+import re
 
 import yaml
 
@@ -50,6 +51,16 @@ class Policy:
         if index is not None:
             self._validate_index(str(index))
 
+        if call.tool == "esql":
+            query = arguments.get("query")
+            if not isinstance(query, str) or not query.strip():
+                raise PolicyViolation("esql query is required")
+            sources = self._extract_esql_sources(query)
+            if not sources:
+                raise PolicyViolation("esql index source is required")
+            for source in sources:
+                self._validate_index(source)
+
         rows = arguments.get("rows")
         if rows is not None and (not isinstance(rows, int) or isinstance(rows, bool) or rows < 0 or rows > self.max_rows):
             raise PolicyViolation(f"rows exceeds allowed limit: {rows}")
@@ -82,3 +93,11 @@ class Policy:
 
         if not allowed:
             raise PolicyViolation(f"index is outside allowlist: {index}")
+
+    @staticmethod
+    def _extract_esql_sources(query: str) -> list[str]:
+        match = re.search(r"\bFROM\s+([^|]+)", query, flags=re.IGNORECASE)
+        if not match:
+            return []
+        source_clause = re.split(r"\bMETADATA\b", match.group(1), maxsplit=1, flags=re.IGNORECASE)[0]
+        return [item.strip().strip('"`') for item in source_clause.split(",") if item.strip()]
