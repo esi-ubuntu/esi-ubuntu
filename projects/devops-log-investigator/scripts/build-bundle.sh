@@ -63,6 +63,7 @@ cp "$PROJECT_ROOT/config/policy.yaml" "$OUTPUT/runtime/config/policy.yaml"
 cp "$PROJECT_ROOT/config/system-prompt.txt" "$OUTPUT/runtime/config/system-prompt.txt"
 cp "$PROJECT_ROOT/config/.env.example" "$OUTPUT/runtime/.env.example"
 cp "$SCRIPT_DIR/install-offline.sh" "$SCRIPT_DIR/start.sh" "$SCRIPT_DIR/stop.sh" "$SCRIPT_DIR/health.sh" "$OUTPUT/scripts/"
+chmod 0755 "$OUTPUT/scripts/"*.sh
 printf '%s\n' "$INVESTIGATOR_IMAGE_TAG" > "$OUTPUT/runtime/INVESTIGATOR_IMAGE_TAG"
 printf '%s\n' "$MODEL" > "$OUTPUT/runtime/OLLAMA_MODEL"
 
