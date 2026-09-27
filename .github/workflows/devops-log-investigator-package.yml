@@ -51,7 +51,7 @@ jobs:
           test -f "$bundle/images/investigator.tar"
           test -f "$bundle/SHA256SUMS"
           (cd "$bundle" && sha256sum -c SHA256SUMS)
-          test -f "$bundle/models/ollama/manifests/registry.ollama.ai/library/qwen3/8b-q4_K_M"
+          test -f "$bundle/models/ollama/models/manifests/registry.ollama.ai/library/qwen3/8b-q4_K_M"
           du -sh "$bundle"
           df -h /
 
