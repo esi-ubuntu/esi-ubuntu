@@ -18,7 +18,7 @@ concurrency:
 jobs:
   staging-gate:
     name: Build -> Offline Install -> Runtime E2E
-    runs-on: self-hosted
+    runs-on: [self-hosted, dli-staging]
     timeout-minutes: 180
     env:
       PROJECT_DIR: projects/devops-log-investigator
@@ -132,8 +132,6 @@ jobs:
           bundle="${RUNNER_TEMP}/dli-final-gate/bundle"
           install_dir="${RUNNER_TEMP}/dli-final-gate/install"
 
-          # Remove the exact runtime images from the connected build phase. The installer
-          # must restore them from the four tar files and start with --pull never.
           investigator_tag="$(cat "$bundle/runtime/INVESTIGATOR_IMAGE_TAG")"
           docker image rm -f \
             "ghcr.io/open-webui/open-webui:0.11.4-slim" \
