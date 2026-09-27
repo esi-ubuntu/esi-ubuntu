@@ -1,6 +1,6 @@
 # Shared Analysis Contract
 
-Prompt-Version: 1.1
+Prompt-Version: 1.2
 
 ## Identity
 Iran-stock reports use `REPORT_ID = YYYY-MM-DD-IR-TSE-1200`.
@@ -14,6 +14,16 @@ Iran-stock reports use `REPORT_ID = YYYY-MM-DD-IR-TSE-1200`.
 
 ## Data quality
 Use `DATA_NOT_VERIFIED` when a material claim cannot be validated and `DATA_CONFLICT` when credible sources disagree.
+
+## Run continuity — mandatory
+A scheduled daily monitoring run must not be canceled merely because some sources, fields, symbols, indicators, or news items are unavailable.
+
+- Continue the run with all verifiable data that is available.
+- Mark unavailable material fields as `DATA_NOT_VERIFIED` and conflicting credible data as `DATA_CONFLICT`.
+- Produce and persist a valid report even when the qualified-candidate list is empty.
+- `NO QUALIFIED CANDIDATE` is a valid analytical result; a missing report is not.
+- Only a true execution/persistence failure may prevent output. Such failure must be reported explicitly and must never be misrepresented as a successful run.
+- Never fill a list with weak names merely to avoid an empty result.
 
 ## Scores
 All scores are 0..100.
