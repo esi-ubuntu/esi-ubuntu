@@ -115,3 +115,12 @@ def test_builder_is_staging_only_and_exports_exact_four_images_plus_model():
     assert "ELASTIC_MCP_SOURCE_IMAGE" in text
     assert "DLI_IMAGE_PULL_RETRIES" in text
     assert 'docker tag "$source" "$runtime"' in text
+
+
+def test_builder_normalizes_ollama_store_for_portable_checksums():
+    text = BUILDER.read_text(encoding="utf-8")
+    assert 'BUNDLE_UID="$(id -u)"' in text
+    assert 'BUNDLE_GID="$(id -g)"' in text
+    assert 'chown -R ${BUNDLE_UID}:${BUNDLE_GID} /store' in text
+    assert 'chmod -R u+rwX /store' in text
+    assert 'find "$OUTPUT/models/ollama" -type f -exec test -r {}' in text
