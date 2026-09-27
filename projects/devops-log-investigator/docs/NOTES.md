@@ -1,0 +1,1 @@
+This MVP intentionally avoids LangChain/LangGraph, vector databases, custom frontend code, production agents/exporters, and Elasticsearch/Kibana write APIs. These remain out of scope unless a demonstrated limitation requires them later.
