@@ -1,0 +1,258 @@
+{
+  "schema_version": "1.0",
+  "report_id": "2026-09-27-IR-TSE-1200",
+  "market": "iran_stock",
+  "generated_at": "2026-09-27T12:02:20+03:30",
+  "agent": {
+    "name": "Iran Stock Market Scout",
+    "workflow": "market-intelligence-hub/prompts/iran-stock-scout.md",
+    "contract": "market-intelligence-hub/prompts/shared-analysis-contract.md",
+    "run_type": "12:00 Tehran scout"
+  },
+  "market_status": {
+    "tehran_trading_date": "1405-07-05",
+    "gregorian_date": "2026-09-27",
+    "action_status": "FAVORABLE_SELECTIVE_NO_CHASE",
+    "breadth": {
+      "positive": 928,
+      "negative": 76,
+      "unchanged": 94,
+      "traded": 1098,
+      "positive_to_negative_ratio": 12.21
+    },
+    "index_snapshot": {
+      "time": "09:18 Asia/Tehran",
+      "tedpix": 7230852,
+      "tedpix_change_percent": 1.09,
+      "equal_weight_index": 1949635,
+      "equal_weight_change_percent": 1.03
+    },
+    "market_money_flow": {
+      "status": "DATA_CONFLICT",
+      "detail": "The live page's dedicated flow section showed +6,690.6 billion toman, while another summary card on the same page showed -5.9 thousand; the precise market-wide flow is not used for ranking."
+    },
+    "leading_industries": [
+      {"industry": "سرمایه‌گذاری‌ها", "change_percent": 6.39},
+      {"industry": "شرکت‌های چندرشته‌ای صنعتی", "change_percent": 2.94},
+      {"industry": "استخراج زغال‌سنگ", "change_percent": 2.92},
+      {"industry": "سیمان، آهک و گچ", "change_percent": 2.87},
+      {"industry": "استخراج کانه‌های فلزی", "change_percent": 2.83}
+    ],
+    "summary": "The market was broadly positive at noon, but many leaders were pinned near daily or 52-week highs. Favor pullbacks and confirmed entries; do not chase queues."
+  },
+  "candidates": [
+    {
+      "rank": 1,
+      "symbol": "خبهمن",
+      "name": "گروه بهمن",
+      "label": "EARLY_WATCH",
+      "last_price": 2543,
+      "last_change_percent": 3.0,
+      "close_price": 2535,
+      "close_change_percent": 2.67,
+      "day_low": 2461,
+      "year_high": 2869,
+      "pe": 4.5,
+      "volume": 316800000,
+      "buyer_to_seller_power": 3.25,
+      "demand_volume": 73100000,
+      "supply_volume": 74700,
+      "tape_score": 90,
+      "tape_score_basis": "Provisional scout score using verified price strength, buyer/seller power, order depth and liquidity; disputed exact money-flow amount excluded.",
+      "core_fundamental_score_status": "DATA_NOT_VERIFIED",
+      "technical_score_status": "DATA_NOT_VERIFIED",
+      "fundamental_status": "UNCHANGED_SCORE_NOT_VERIFIED",
+      "critical_news_risk": false,
+      "critical_news_risk_scope": "No verified symbol-specific critical disclosure was found in the available current source scan; market-wide political risk remains.",
+      "entry_plan": {
+        "preferred_entry": "Only after a stable pullback/hold above 2461; avoid buying the upper queue.",
+        "scenario_entry": 2543,
+        "scenario_stop": 2400,
+        "scenario_target": 2869
+      },
+      "risk_reward": 2.28,
+      "risk_reward_basis": "Scenario only: (2869-2543)/(2543-2400). The stop is analyst-defined and the target is the prior 52-week high, not a forecast.",
+      "thesis": "Best balanced tape in the shortlist: strong buyer power, deep demand and low displayed supply, with a low trailing P/E. Formal early-candidate status is withheld because the canonical core score is not verified.",
+      "risks": ["Exact real-money inflow amount is DATA_CONFLICT", "One-month return remained negative", "Macro and political headline risk"]
+    },
+    {
+      "rank": 2,
+      "symbol": "فزر",
+      "name": "پویا زرکان آق‌دره",
+      "label": "FUNDAMENTAL_GEM",
+      "watch_label": "BREAKOUT_WATCH",
+      "last_price": 321000,
+      "last_change_percent": 2.98,
+      "close_price": 321000,
+      "close_change_percent": 2.98,
+      "year_high": 321000,
+      "volume": 4100000,
+      "buyer_to_seller_power": 2.99,
+      "demand_volume": 13600000,
+      "supply_volume": 0,
+      "core_fundamental_score": 85.63,
+      "technical_score": 91.57,
+      "technical_score_basis": "External Tindex screener model; canonical component breakdown unavailable.",
+      "tape_score": 86,
+      "tape_score_basis": "Provisional scout score using verified limit-up price, buyer/seller power, queue depth and liquidity; disputed exact money-flow amount excluded.",
+      "rsi_14": 84.74,
+      "fundamental_status": "UNCHANGED",
+      "critical_news_risk": false,
+      "critical_news_risk_scope": "No verified symbol-specific critical disclosure was found in the available current source scan; market-wide political risk remains.",
+      "entry_plan": {
+        "preferred_entry": "No chase at the 52-week high; wait for a pullback and renewed demand confirmation.",
+        "scenario_entry": null,
+        "scenario_stop": null,
+        "scenario_target": null
+      },
+      "risk_reward": null,
+      "risk_reward_basis": "DATA_NOT_VERIFIED: no defensible overhead target above a fresh 52-week high.",
+      "thesis": "The only candidate with a verified external core score above 80 and high technical score, plus a limit-up/no-supply tape. Overbought RSI and lack of a defensible target prevent a momentum or prime label.",
+      "risks": ["RSI 84.74", "At a fresh 52-week high", "Exact real-money inflow amount is DATA_CONFLICT"]
+    },
+    {
+      "rank": 3,
+      "symbol": "وصندوق",
+      "name": "سرمایه‌گذاری صندوق بازنشستگی",
+      "label": "BREAKOUT_WATCH",
+      "last_price": 25070,
+      "last_change_percent": 3.0,
+      "close_price": 25030,
+      "close_change_percent": 2.83,
+      "day_low": 24340,
+      "year_high": 26000,
+      "pe": 7.5,
+      "volume": 13100000,
+      "buyer_to_seller_power": 3.15,
+      "demand_volume": 12000000,
+      "supply_volume": 18100,
+      "tape_score": 84,
+      "tape_score_basis": "Provisional scout score using verified price strength, buyer/seller power and order depth; disputed exact money-flow amount excluded.",
+      "core_fundamental_score_status": "DATA_NOT_VERIFIED",
+      "technical_score_status": "DATA_NOT_VERIFIED",
+      "fundamental_status": "UNCHANGED_SCORE_NOT_VERIFIED",
+      "critical_news_risk": false,
+      "critical_news_risk_scope": "No verified symbol-specific critical disclosure was found in the available current source scan; market-wide political risk remains.",
+      "entry_plan": {
+        "preferred_entry": "Watch 24340 as the first support reference; do not chase near 26000 resistance.",
+        "scenario_entry": 25070,
+        "scenario_stop": 24340,
+        "scenario_target": 26000
+      },
+      "risk_reward": 1.27,
+      "risk_reward_basis": "Scenario only: (26000-25070)/(25070-24340).",
+      "thesis": "Strong demand/supply imbalance and buyer power, supported by a positive investment-sector tape, but the nearest visible reward is insufficient for a prime setup.",
+      "risks": ["Risk/reward below 2", "Near 52-week high", "Canonical fundamental and technical scores not verified"]
+    },
+    {
+      "rank": 4,
+      "symbol": "فصبا",
+      "name": "صبا فولاد خلیج فارس",
+      "label": "MOMENTUM_WATCH",
+      "last_price": 4050,
+      "last_change_percent": 2.79,
+      "close_price": 4040,
+      "close_change_percent": 2.54,
+      "day_low": 3940,
+      "year_high": 4070,
+      "pe": 22.7,
+      "volume": 26300000,
+      "buyer_to_seller_power": 12.87,
+      "demand_volume": 11900000,
+      "supply_volume": 268500,
+      "tape_score": 82,
+      "tape_score_basis": "Provisional scout score using verified buyer/seller power, price strength, order depth and liquidity; disputed exact money-flow amount excluded.",
+      "core_fundamental_score_status": "DATA_NOT_VERIFIED",
+      "technical_score_status": "DATA_NOT_VERIFIED",
+      "fundamental_status": "FUNDAMENTAL_REVIEW_REQUIRED",
+      "fundamental_review_reason": "A new monthly activity report for the period ended 1405-06-31 was published on 1405-07-04; no score change is made before content review.",
+      "critical_news_risk": false,
+      "critical_news_risk_scope": "No verified symbol-specific critical risk was found, but the newly published monthly report still requires fundamental review.",
+      "entry_plan": {
+        "preferred_entry": "No chase near 4070; wait for the monthly report review and a pullback/hold.",
+        "scenario_entry": 4050,
+        "scenario_stop": 3940,
+        "scenario_target": 4070
+      },
+      "risk_reward": 0.18,
+      "risk_reward_basis": "Scenario only: (4070-4050)/(4050-3940).",
+      "thesis": "Exceptional buyer power and strong recent momentum, but the stock is immediately below its 52-week high and the nearest-reference risk/reward is poor.",
+      "risks": ["Risk/reward far below 2", "New monthly report requires review", "P/E higher than the rest of the shortlist"]
+    },
+    {
+      "rank": 5,
+      "symbol": "شاملا",
+      "name": "معدنی املاح ایران",
+      "label": "MOMENTUM_WATCH",
+      "last_price": 41800,
+      "last_change_percent": 2.98,
+      "close_price": 41800,
+      "close_change_percent": 2.98,
+      "year_high": 41800,
+      "pe": 9.7,
+      "volume": 1300000,
+      "buyer_to_seller_power": 2.21,
+      "demand_volume": 1400000,
+      "supply_volume": 0,
+      "tape_score": 78,
+      "tape_score_basis": "Provisional scout score using verified limit-up price, buyer/seller power and no displayed supply; penalized for low turnover versus its recent average.",
+      "core_fundamental_score_status": "DATA_NOT_VERIFIED",
+      "technical_score_status": "DATA_NOT_VERIFIED",
+      "fundamental_status": "UNCHANGED_SCORE_NOT_VERIFIED",
+      "critical_news_risk": false,
+      "critical_news_risk_scope": "No verified symbol-specific critical disclosure was found in the available current source scan; market-wide political risk remains.",
+      "entry_plan": {
+        "preferred_entry": "No chase at a fresh high; require a liquid pullback and support confirmation.",
+        "scenario_entry": null,
+        "scenario_stop": null,
+        "scenario_target": null
+      },
+      "risk_reward": null,
+      "risk_reward_basis": "DATA_NOT_VERIFIED: no defensible overhead target above a fresh 52-week high.",
+      "thesis": "Clean limit-up tape and no displayed supply, with a moderate P/E, but turnover was below its recent average and upside reference is absent.",
+      "risks": ["At a fresh 52-week high", "Lower-than-average turnover", "Risk/reward not verifiable"]
+    }
+  ],
+  "top_5": ["خبهمن", "فزر", "وصندوق", "فصبا", "شاملا"],
+  "best_early_candidate": {
+    "symbol": null,
+    "status": "NONE",
+    "reason": "No candidate combined a verified canonical core fundamental score of at least 70 with a sufficiently early setup; خبهمن remains an early watch only."
+  },
+  "best_momentum_hunter": {
+    "symbol": null,
+    "status": "NONE",
+    "reason": "No candidate had all required verified inputs: technical score at least 75, tape score at least 75, risk/reward at least 2, and no critical news risk."
+  },
+  "best_potential_prime": {
+    "symbol": null,
+    "status": "NONE",
+    "reason": "No candidate met the full verified core, technical, tape, risk/reward and news thresholds."
+  },
+  "data_quality": {
+    "overall": "MEDIUM",
+    "as_of": "2026-09-27T12:02:20+03:30",
+    "verified": [
+      "Live market breadth and industry rotation for 1405-07-05",
+      "Candidate price, close, volume, buyer/seller power and order-depth snapshots",
+      "FZR external screener core and technical scores",
+      "FSABA presence of a new monthly report dated 1405-07-04"
+    ],
+    "limitations": [
+      "Tindex showed internally inconsistent market-wide money-flow summaries; the exact value was excluded from ranking.",
+      "Several symbol pages displayed exact money-flow values inconsistent with displayed turnover under ordinary unit interpretation; exact values were marked DATA_CONFLICT and excluded.",
+      "Canonical technical component scores were not independently reconstructable for four candidates.",
+      "Core fundamental scores were not re-scored without verified filing-level inputs.",
+      "Intraday snapshots can change after generation."
+    ],
+    "sources": [
+      {"name": "Tindex live Tehran market", "url": "https://tindex.app/stocks/", "date": "1405-07-05"},
+      {"name": "Tindex FZR", "url": "https://tindex.app/stocks/%D9%81%D8%B2%D8%B1/", "date": "1405-07-05"},
+      {"name": "Tindex KHBHMAN", "url": "https://tindex.app/stocks/%D8%AE%D8%A8%D9%87%D9%85%D9%86/", "date": "1405-07-05"},
+      {"name": "Tindex VASANDOGH", "url": "https://tindex.app/stocks/%D9%88%D8%B5%D9%86%D8%AF%D9%88%D9%82/", "date": "1405-07-05"},
+      {"name": "Tindex FSABA", "url": "https://tindex.app/stocks/%D9%81%D8%B5%D8%A8%D8%A7/", "date": "1405-07-05"},
+      {"name": "Tindex SHAMLA", "url": "https://tindex.app/stocks/%D8%B4%D8%A7%D9%85%D9%84%D8%A7/", "date": "1405-07-05"},
+      {"name": "Morning market index snapshot", "url": "https://petrochemiha.ir/%D8%B4%D8%A7%D8%AE%D8%B5-%DA%A9%D9%84-%D8%A8%D9%88%D8%B1%D8%B3-%D8%A7%D8%B2-%DB%B7-%DB%B2-%D9%85%DB%8C%D9%84%DB%8C%D9%88%D9%86-%D9%88%D8%A7%D8%AD%D8%AF-%D8%B9%D8%A8%D9%88%D8%B1-%DA%A9%D8%B1%D8%AF/", "date": "1405-07-05T09:18:00+03:30"}
+    ]
+  }
+}
