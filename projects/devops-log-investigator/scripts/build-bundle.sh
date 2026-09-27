@@ -14,6 +14,10 @@ OUTPUT="$(realpath -m "$1")"
 OPEN_WEBUI_IMAGE="ghcr.io/open-webui/open-webui:0.11.4-slim"
 OLLAMA_IMAGE="ollama/ollama:0.34.4"
 ELASTIC_MCP_IMAGE="docker.elastic.co/mcp/elasticsearch:0.4.6"
+OPEN_WEBUI_SOURCE_IMAGE="${OPEN_WEBUI_SOURCE_IMAGE:-$OPEN_WEBUI_IMAGE}"
+OLLAMA_SOURCE_IMAGE="${OLLAMA_SOURCE_IMAGE:-$OLLAMA_IMAGE}"
+ELASTIC_MCP_SOURCE_IMAGE="${ELASTIC_MCP_SOURCE_IMAGE:-$ELASTIC_MCP_IMAGE}"
+IMAGE_PULL_RETRIES="${DLI_IMAGE_PULL_RETRIES:-3}"
 MODEL="${OLLAMA_MODEL:-qwen3:8b-q4_K_M}"
 INVESTIGATOR_IMAGE_TAG="${INVESTIGATOR_IMAGE_TAG:-$(git -C "$PROJECT_ROOT" rev-parse --short=12 HEAD 2>/dev/null || date +%Y%m%d%H%M%S)}"
 INVESTIGATOR_IMAGE="devops-log-investigator/investigator:${INVESTIGATOR_IMAGE_TAG}"
@@ -21,6 +25,7 @@ MODEL_CONTAINER="dli-bundle-model-$$"
 
 command -v docker >/dev/null || { echo "docker is required on staging" >&2; exit 1; }
 command -v sha256sum >/dev/null || { echo "sha256sum is required on staging" >&2; exit 1; }
+[[ "$IMAGE_PULL_RETRIES" =~ ^[1-9][0-9]*$ ]] || { echo "DLI_IMAGE_PULL_RETRIES must be a positive integer" >&2; exit 2; }
 
 rm -rf "$OUTPUT"
 mkdir -p "$OUTPUT/images" "$OUTPUT/models/ollama" "$OUTPUT/runtime" "$OUTPUT/scripts"
@@ -30,10 +35,31 @@ cleanup() {
 }
 trap cleanup EXIT
 
+pull_runtime_image() {
+  local runtime="$1"
+  local source="$2"
+  local attempt
+  for attempt in $(seq 1 "$IMAGE_PULL_RETRIES"); do
+    if docker pull "$source"; then
+      if [[ "$source" != "$runtime" ]]; then
+        docker tag "$source" "$runtime"
+      fi
+      docker image inspect "$runtime" >/dev/null
+      return 0
+    fi
+    if [[ "$attempt" -lt "$IMAGE_PULL_RETRIES" ]]; then
+      echo "pull failed for $source (attempt $attempt/$IMAGE_PULL_RETRIES); retrying" >&2
+      sleep $((attempt * 3))
+    fi
+  done
+  echo "failed to pull source image after $IMAGE_PULL_RETRIES attempts: $source" >&2
+  return 1
+}
+
 echo "[1/7] Pulling pinned third-party images on connected staging"
-docker pull "$OPEN_WEBUI_IMAGE"
-docker pull "$OLLAMA_IMAGE"
-docker pull "$ELASTIC_MCP_IMAGE"
+pull_runtime_image "$OPEN_WEBUI_IMAGE" "$OPEN_WEBUI_SOURCE_IMAGE"
+pull_runtime_image "$OLLAMA_IMAGE" "$OLLAMA_SOURCE_IMAGE"
+pull_runtime_image "$ELASTIC_MCP_IMAGE" "$ELASTIC_MCP_SOURCE_IMAGE"
 
 echo "[2/7] Building the only custom image"
 docker build -t "$INVESTIGATOR_IMAGE" "$PROJECT_ROOT/investigator"
@@ -73,6 +99,9 @@ printf '%s\n' "$MODEL" > "$OUTPUT/runtime/OLLAMA_MODEL"
   echo "elastic-mcp=$ELASTIC_MCP_IMAGE"
   echo "investigator=$INVESTIGATOR_IMAGE"
   echo "model=$MODEL"
+  echo "open-webui-source=$OPEN_WEBUI_SOURCE_IMAGE"
+  echo "ollama-source=$OLLAMA_SOURCE_IMAGE"
+  echo "elastic-mcp-source=$ELASTIC_MCP_SOURCE_IMAGE"
   for image in "$OPEN_WEBUI_IMAGE" "$OLLAMA_IMAGE" "$ELASTIC_MCP_IMAGE" "$INVESTIGATOR_IMAGE"; do
     docker image inspect --format '{{join .RepoDigests ","}}' "$image" 2>/dev/null || true
   done
