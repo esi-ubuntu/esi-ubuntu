@@ -6,7 +6,8 @@ on:
     branches:
       - feat/devops-log-investigator
     paths:
-      - .github/workflows/devops-log-investigator-package.yml
+      - 'projects/devops-log-investigator/**'
+      - '.github/workflows/devops-log-investigator-package.yml'
 
 permissions:
   contents: read
