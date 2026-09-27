@@ -1,0 +1,1 @@
+Current release blocker: GitHub Actions is queued on `self-hosted`; therefore Docker-based CI and isolated four-container smoke verification are pending. This is an infrastructure verification blocker, not evidence of a passing or failing application build.
