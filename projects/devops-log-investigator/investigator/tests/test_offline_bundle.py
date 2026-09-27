@@ -110,3 +110,8 @@ def test_builder_is_staging_only_and_exports_exact_four_images_plus_model():
     assert "ollama pull" in text
     assert "SHA256SUMS" in text
     assert "chmod 0755" in text
+    assert "OPEN_WEBUI_SOURCE_IMAGE" in text
+    assert "OLLAMA_SOURCE_IMAGE" in text
+    assert "ELASTIC_MCP_SOURCE_IMAGE" in text
+    assert "DLI_IMAGE_PULL_RETRIES" in text
+    assert 'docker tag "$source" "$runtime"' in text
