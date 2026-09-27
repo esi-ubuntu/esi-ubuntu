@@ -75,7 +75,11 @@ def create_app(*, investigator: Any | None = None, settings: Settings | None = N
             raise HTTPException(status_code=400, detail=f"Unsupported model: {request.model}")
         if request.stream:
             raise HTTPException(status_code=400, detail="Streaming is not supported by the MVP")
-        user_messages = [message.content.strip() for message in request.messages if message.role == "user" and message.content.strip()]
+        user_messages = [
+            message.content.strip()
+            for message in request.messages
+            if message.role == "user" and message.content.strip()
+        ]
         if not user_messages:
             raise HTTPException(status_code=400, detail="A non-empty user message is required")
         question = user_messages[-1]
@@ -129,7 +133,12 @@ def _build_default_investigator(settings: Settings) -> Investigator:
         policy=policy,
         catalog=catalog,
         llm=OllamaClient(settings.ollama_url, model=settings.ollama_model),
-        mcp=ElasticMCPClient(settings.mcp_url),
+        mcp=ElasticMCPClient(
+            settings.mcp_url,
+            max_sample_rows=policy.max_sample_rows,
+            max_time_range_hours=policy.max_time_range_hours,
+            allowed_index_patterns=policy.allowed_indices,
+        ),
         audit_writer=AuditWriter(settings.audit_dir),
         sensitive_fields=set(settings.sensitive_fields),
         system_prompt=system_prompt,
