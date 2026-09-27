@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Awaitable, Callable
+from fnmatch import fnmatchcase
 from typing import Any
 
 
@@ -28,11 +29,13 @@ class ElasticMCPClient:
         call_impl: CallImpl | None = None,
         max_sample_rows: int = 25,
         max_time_range_hours: int = 24,
+        allowed_index_patterns: tuple[str, ...] = (),
     ) -> None:
         self.endpoint = endpoint
         self._call_impl = call_impl or self._default_call
         self.max_sample_rows = max_sample_rows
         self.max_time_range_hours = max_time_range_hours
+        self.allowed_index_patterns = allowed_index_patterns
 
     async def call(self, tool: str, arguments: dict[str, Any]) -> dict[str, Any]:
         transport_arguments = self._to_transport_arguments(tool, arguments)
@@ -42,9 +45,11 @@ class ElasticMCPClient:
             raise MCPUnavailable(str(exc)) from exc
         normalized = self._normalize_result(result)
         if isinstance(normalized, list):
-            return {"items": normalized}
+            normalized = {"items": normalized}
         if not isinstance(normalized, dict):
             raise MCPProtocolError("MCP tool result is not an object")
+        if tool == "list_indices" and self.allowed_index_patterns:
+            normalized = self._filter_index_discovery(normalized)
         return normalized
 
     def _to_transport_arguments(self, tool: str, arguments: dict[str, Any]) -> dict[str, Any]:
@@ -111,6 +116,25 @@ class ElasticMCPClient:
             if isinstance(exc, MCPError):
                 raise
             raise MCPUnavailable(str(exc)) from exc
+
+    def _filter_index_discovery(self, payload: object) -> object:
+        if isinstance(payload, list):
+            return [
+                item
+                for item in (self._filter_index_discovery(value) for value in payload)
+                if item is not None
+            ]
+        if isinstance(payload, dict):
+            index_name = payload.get("index")
+            if isinstance(index_name, str) and not any(
+                fnmatchcase(index_name, pattern) for pattern in self.allowed_index_patterns
+            ):
+                return None
+            return {
+                key: self._filter_index_discovery(value)
+                for key, value in payload.items()
+            }
+        return payload
 
     @staticmethod
     def _normalize_result(result: object) -> object:
