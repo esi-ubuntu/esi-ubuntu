@@ -76,6 +76,19 @@ docker exec "$MODEL_CONTAINER" ollama pull "$MODEL"
 docker exec "$MODEL_CONTAINER" ollama show "$MODEL" >/dev/null
 cleanup
 
+# Ollama writes some store files as container root with owner-only permissions.
+# Normalize ownership back to the staging user so checksum/archive creation is
+# deterministic without weakening private-key permissions for other users.
+BUNDLE_UID="$(id -u)"
+BUNDLE_GID="$(id -g)"
+docker run --rm --pull never \
+  -v "$OUTPUT/models/ollama:/store" \
+  --entrypoint /bin/sh "$OLLAMA_IMAGE" \
+  -c "chown -R ${BUNDLE_UID}:${BUNDLE_GID} /store && chmod -R u+rwX /store"
+
+# Prove the model store is readable before expensive image export/checksum work.
+find "$OUTPUT/models/ollama" -type f -exec test -r {} \;
+
 echo "[4/7] Exporting exactly four runtime images"
 docker save -o "$OUTPUT/images/open-webui.tar" "$OPEN_WEBUI_IMAGE"
 docker save -o "$OUTPUT/images/ollama.tar" "$OLLAMA_IMAGE"
