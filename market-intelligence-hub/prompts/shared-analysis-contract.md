@@ -1,6 +1,6 @@
 # Shared Analysis Contract
 
-Prompt-Version: 1.0
+Prompt-Version: 1.1
 
 ## Identity
 Iran-stock reports use `REPORT_ID = YYYY-MM-DD-IR-TSE-1200`.
@@ -30,5 +30,22 @@ Daily Opportunity Score = Core Fundamental × 0.25 + Daily Valuation × 0.15 + T
 ## Ownership
 Scout may write only `scout.json` and `scout.md` for its report date. Auditor writes only `auditor.json`, `auditor.md`, and `final.json`. Auditor never overwrites Scout history.
 
-## Fundamental stability
-Core Fundamental Score changes only with new material evidence. A score change requires previous score, new score, change amount, date, reason, and non-empty evidence.
+## Fundamental state — source of truth
+Core Fundamental is persistent state, not a daily calculation.
+
+Canonical state path:
+`state/fundamentals/iran-stocks/<SYMBOL>.json`
+
+For every symbol considered by Scout or Auditor:
+1. Read the symbol state file first if it exists.
+2. Reuse the stored `core_fundamental_score`, component scores, evidence date, and baseline metadata exactly unless new material fundamental evidence has appeared after the state's last evidence timestamp.
+3. Daily price action, tape, technical indicators, market mood, queue behavior, valuation movement caused only by price, or ordinary news must NEVER change Core Fundamental Score.
+4. A Core Fundamental Score may change only because of new material fundamental evidence such as a new monthly operating report, quarterly/annual financial statement, material disclosure, major contract, verified selling-price change, material production change, margin change, feedstock/energy-cost change, capital-structure event, or structural industry change with direct company impact.
+5. Any state change must record: previous score, new score, delta, timestamp/date, reason, source/evidence, affected components, and reviewer role.
+6. If no new material evidence exists: `fundamental_status = UNCHANGED` and the stored score must be carried forward unchanged.
+7. If no prior state exists: do NOT invent an `UNCHANGED` score. Either create an `INITIAL_BASELINE` only from sufficient verified fundamental evidence, or use `DATA_NOT_VERIFIED` until a valid baseline is established.
+8. The daily Scout report is not itself the source of truth for fundamental state. Historical daily reports must not silently redefine the fundamental baseline.
+9. Auditor may update the canonical fundamental state only when it has verified new material evidence and has documented the required change record. Scout should flag `Fundamental Review Required = YES` rather than casually rewriting the baseline.
+
+## Fundamental stability invariant
+Absent verified new material fundamental evidence, today’s Core Fundamental Score for a symbol MUST equal the canonical stored score. A different score without a documented state transition is a validation failure.
