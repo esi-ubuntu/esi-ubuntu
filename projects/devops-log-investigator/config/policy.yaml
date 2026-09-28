@@ -1,0 +1,15 @@
+allowed_indices:
+  - logs-*
+  - payments-*
+  - transactions-*
+denied_indices:
+  - .security-*
+  - .internal-*
+denied_fields:
+  - card.number
+  - auth.token
+max_time_range_hours: 24
+max_rows: 500
+max_sample_rows: 25
+max_calls: 20
+max_repairs: 3

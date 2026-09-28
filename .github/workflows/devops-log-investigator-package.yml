@@ -1,0 +1,178 @@
+name: DevOps Log Investigator Offline Package
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feat/devops-log-investigator
+    paths:
+      - 'projects/devops-log-investigator/**'
+      - '.github/workflows/devops-log-investigator-package.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dli-offline-package
+  cancel-in-progress: true
+
+jobs:
+  package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@v4
+
+      - name: Free disk for large offline bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL || true
+          sudo apt-get clean || true
+          docker system prune -af || true
+          df -h /
+
+      - name: Build four-image offline bundle with Qwen3
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd projects/devops-log-investigator
+          ./scripts/build-bundle.sh "$RUNNER_TEMP/dli-offline-bundle"
+
+      - name: Verify bundle before packaging
+        shell: bash
+        run: |
+          set -euo pipefail
+          bundle="$RUNNER_TEMP/dli-offline-bundle"
+          test -f "$bundle/images/open-webui.tar"
+          test -f "$bundle/images/ollama.tar"
+          test -f "$bundle/images/elastic-mcp.tar"
+          test -f "$bundle/images/investigator.tar"
+          test -f "$bundle/SHA256SUMS"
+          (cd "$bundle" && sha256sum -c SHA256SUMS)
+          test -f "$bundle/models/ollama/models/manifests/registry.ollama.ai/library/qwen3/8b-q4_K_M"
+          du -sh "$bundle"
+          df -h /
+
+      - name: Create compressed transferable archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq zstd
+          cd "$RUNNER_TEMP"
+          tar -cf - dli-offline-bundle | zstd -T0 -3 -o "$GITHUB_WORKSPACE/dli-offline-bundle.tar.zst"
+          cd "$GITHUB_WORKSPACE"
+          sha256sum dli-offline-bundle.tar.zst > dli-offline-bundle.tar.zst.sha256
+          split -b 1400M -d -a 3 dli-offline-bundle.tar.zst dli-offline-bundle.tar.zst.part-
+          sha256sum dli-offline-bundle.tar.zst.part-* > dli-offline-bundle.parts.sha256
+          ls -lh dli-offline-bundle.tar.zst* dli-offline-bundle.parts.sha256
+
+      - name: Upload manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: dli-offline-bundle-manifest
+          path: |
+            dli-offline-bundle.tar.zst.sha256
+            dli-offline-bundle.parts.sha256
+          compression-level: 0
+          retention-days: 7
+
+      - name: Upload part 000
+        uses: actions/upload-artifact@v4
+        with:
+          name: dli-offline-bundle-part-000
+          path: dli-offline-bundle.tar.zst.part-000
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload part 001
+        uses: actions/upload-artifact@v4
+        with:
+          name: dli-offline-bundle-part-001
+          path: dli-offline-bundle.tar.zst.part-001
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload part 002
+        uses: actions/upload-artifact@v4
+        with:
+          name: dli-offline-bundle-part-002
+          path: dli-offline-bundle.tar.zst.part-002
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload part 003
+        uses: actions/upload-artifact@v4
+        with:
+          name: dli-offline-bundle-part-003
+          path: dli-offline-bundle.tar.zst.part-003
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload part 004
+        uses: actions/upload-artifact@v4
+        with:
+          name: dli-offline-bundle-part-004
+          path: dli-offline-bundle.tar.zst.part-004
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload part 005
+        uses: actions/upload-artifact@v4
+        with:
+          name: dli-offline-bundle-part-005
+          path: dli-offline-bundle.tar.zst.part-005
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload part 006
+        uses: actions/upload-artifact@v4
+        with:
+          name: dli-offline-bundle-part-006
+          path: dli-offline-bundle.tar.zst.part-006
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload part 007
+        uses: actions/upload-artifact@v4
+        with:
+          name: dli-offline-bundle-part-007
+          path: dli-offline-bundle.tar.zst.part-007
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload part 008
+        uses: actions/upload-artifact@v4
+        with:
+          name: dli-offline-bundle-part-008
+          path: dli-offline-bundle.tar.zst.part-008
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload part 009
+        uses: actions/upload-artifact@v4
+        with:
+          name: dli-offline-bundle-part-009
+          path: dli-offline-bundle.tar.zst.part-009
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Package summary
+        shell: bash
+        run: |
+          echo 'DLI_OFFLINE_PACKAGE_READY'
+          echo "commit=${GITHUB_SHA}"
+          echo 'runtime=4 pinned images + qwen3:8b-q4_K_M'
+          echo 'target=zero pulls, zero package installs, docker load only'

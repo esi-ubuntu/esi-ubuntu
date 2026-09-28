@@ -1,0 +1,131 @@
+name: devops-log-investigator
+
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:0.11.4-slim
+    pull_policy: never
+    restart: unless-stopped
+    ports:
+      - "${OPEN_WEBUI_PORT:-3000}:8080"
+    environment:
+      OFFLINE_MODE: "true"
+      HF_HUB_OFFLINE: "1"
+      ENABLE_VERSION_UPDATE_CHECK: "false"
+      ENABLE_OLLAMA_API: "false"
+      ENABLE_OPENAI_API: "true"
+      ENABLE_OPENAI_API_PASSTHROUGH: "false"
+      OPENAI_API_BASE_URL: "http://investigator:8080/v1"
+      OPENAI_API_KEY: "${INVESTIGATOR_INTERNAL_TOKEN}"
+      WEBUI_SECRET_KEY: "${WEBUI_SECRET_KEY}"
+      SCARF_NO_ANALYTICS: "true"
+      DO_NOT_TRACK: "true"
+      ANONYMIZED_TELEMETRY: "false"
+    volumes:
+      - open-webui-data:/app/backend/data
+    networks:
+      - ui-net
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      investigator:
+        condition: service_healthy
+
+  investigator:
+    image: devops-log-investigator/investigator:${INVESTIGATOR_IMAGE_TAG:-dev}
+    pull_policy: never
+    restart: unless-stopped
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+    environment:
+      INVESTIGATOR_LOGICAL_MODEL: "log-investigator"
+      INVESTIGATOR_POLICY_PATH: "/app/config/policy.yaml"
+      INVESTIGATOR_SYSTEM_PROMPT_PATH: "/app/config/system-prompt.txt"
+      INVESTIGATOR_AUDIT_DIR: "/data/audit"
+      INVESTIGATOR_INTERNAL_TOKEN: "${INVESTIGATOR_INTERNAL_TOKEN}"
+      INVESTIGATOR_SENSITIVE_FIELDS: "${INVESTIGATOR_SENSITIVE_FIELDS:-customer.national_id,national_id,account.number,account_number,card.number}"
+      KIBANA_URL: "${KIBANA_URL:-}"
+      KIBANA_API_KEY: "${KIBANA_API_KEY:-}"
+      KIBANA_SPACE_ID: "${KIBANA_SPACE_ID:-}"
+      OLLAMA_URL: "http://ollama:11434"
+      OLLAMA_MODEL: "${OLLAMA_MODEL:-qwen3:8b-q4_K_M}"
+      ELASTIC_MCP_URL: "http://elastic-mcp:8080/mcp"
+    volumes:
+      - ../config:/app/config:ro
+      - investigator-audit:/data/audit
+    networks:
+      - ui-net
+      - llm-net
+      - elastic-net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=2).read()"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    depends_on:
+      ollama:
+        condition: service_started
+      elastic-mcp:
+        condition: service_started
+
+  ollama:
+    image: ollama/ollama:0.34.4
+    pull_policy: never
+    restart: unless-stopped
+    environment:
+      OLLAMA_HOST: "0.0.0.0:11434"
+      OLLAMA_KEEP_ALIVE: "10m"
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - llm-net
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+
+  elastic-mcp:
+    image: docker.elastic.co/mcp/elasticsearch:0.4.6
+    pull_policy: never
+    restart: unless-stopped
+    command: ["http"]
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:size=32m,noexec,nosuid,nodev
+    environment:
+      ES_URL: "${ES_URL}"
+      ES_API_KEY: "${ES_API_KEY}"
+      ES_SSL_SKIP_VERIFY: "${ES_SSL_SKIP_VERIFY:-false}"
+    networks:
+      - elastic-net
+
+networks:
+  ui-net:
+    driver: bridge
+    internal: true
+  llm-net:
+    driver: bridge
+    internal: true
+  elastic-net:
+    driver: bridge
+
+volumes:
+  open-webui-data:
+    name: dli-open-webui-data
+  ollama-data:
+    name: dli-ollama-data
+  investigator-audit:
+    name: dli-investigator-audit

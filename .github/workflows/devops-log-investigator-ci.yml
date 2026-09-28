@@ -1,0 +1,59 @@
+name: DevOps Log Investigator CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feat/devops-log-investigator
+    paths:
+      - 'projects/devops-log-investigator/**'
+      - '.github/workflows/devops-log-investigator-ci.yml'
+  pull_request:
+    paths:
+      - 'projects/devops-log-investigator/**'
+      - '.github/workflows/devops-log-investigator-ci.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: devops-log-investigator-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: projects/devops-log-investigator
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare Python test environment
+        run: |
+          rm -rf .venv
+          python3 -m venv .venv
+          .venv/bin/python -m pip install --upgrade pip
+          .venv/bin/pip install -r investigator/requirements.txt pytest pytest-asyncio
+
+      - name: Run complete unit and acceptance suite
+        env:
+          PYTHONPATH: investigator
+        run: .venv/bin/pytest -q
+
+      - name: Validate shell and Python syntax
+        run: |
+          bash -n scripts/*.sh
+          .venv/bin/python -m compileall -q investigator/app
+
+      - name: Validate four-image Compose
+        run: |
+          docker compose version
+          docker compose --env-file config/.env.example -f deploy/compose.yaml config >/dev/null
+
+      - name: Build Investigator image
+        run: |
+          docker build -t "devops-log-investigator/investigator:${GITHUB_SHA}" investigator
+          docker image inspect "devops-log-investigator/investigator:${GITHUB_SHA}" >/dev/null

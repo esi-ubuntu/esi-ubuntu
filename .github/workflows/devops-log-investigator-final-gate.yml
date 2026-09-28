@@ -1,0 +1,289 @@
+name: DevOps Log Investigator Final Offline Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feat/devops-log-investigator
+    paths:
+      - .github/workflows/devops-log-investigator-final-gate.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dli-final-offline-gate
+  cancel-in-progress: false
+
+jobs:
+  staging-gate:
+    name: Build -> Offline Install -> Runtime E2E
+    runs-on: [self-hosted, dli-staging]
+    timeout-minutes: 180
+    env:
+      PROJECT_DIR: projects/devops-log-investigator
+      DLI_GATE_PORT: "13000"
+      ES_URL: ${{ secrets.DLI_STAGING_ES_URL || secrets.ES_URL }}
+      ES_API_KEY: ${{ secrets.DLI_STAGING_ES_API_KEY || secrets.ES_API_KEY }}
+      ELASTIC_MCP_SOURCE_IMAGE: ${{ vars.DLI_ELASTIC_MCP_SOURCE_IMAGE }}
+      DLI_IMAGE_PULL_RETRIES: "3"
+
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+
+      - name: Safety and capability preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "runner=$(hostname)"
+          echo "arch=$(uname -m)"
+          docker version
+          docker compose version
+
+          free_kb="$(df -Pk "${RUNNER_TEMP:-/tmp}" | awk 'NR==2 {print $4}')"
+          if (( free_kb < 20 * 1024 * 1024 )); then
+            echo "FINAL_GATE_BLOCKED: less than 20 GiB free disk on runner temp filesystem" >&2
+            exit 70
+          fi
+
+          mem_kb="$(awk '/MemTotal:/ {print $2}' /proc/meminfo)"
+          if (( mem_kb < 6 * 1024 * 1024 )); then
+            echo "FINAL_GATE_BLOCKED: less than 6 GiB RAM on staging runner" >&2
+            exit 70
+          fi
+
+          if [[ -z "${ES_URL:-}" || -z "${ES_API_KEY:-}" ]]; then
+            echo "FINAL_GATE_BLOCKED: configure GitHub secrets DLI_STAGING_ES_URL and DLI_STAGING_ES_API_KEY (or ES_URL / ES_API_KEY)" >&2
+            exit 78
+          fi
+
+          existing_containers="$(docker ps -a --format '{{.Names}}' | grep -E '^devops-log-investigator-' || true)"
+          existing_volumes="$(docker volume ls --format '{{.Name}}' | grep -E '^dli-(open-webui-data|ollama-data|investigator-audit)$' || true)"
+          if [[ -n "$existing_containers" || -n "$existing_volumes" ]]; then
+            echo "FINAL_GATE_BLOCKED: an existing DLI deployment/state is present; refusing to touch it" >&2
+            printf 'containers:\n%s\nvolumes:\n%s\n' "$existing_containers" "$existing_volumes" >&2
+            exit 73
+          fi
+
+          mkdir -p "${RUNNER_TEMP}/dli-final-gate"
+          touch "${RUNNER_TEMP}/dli-final-gate/preflight-owned"
+
+      - name: Build complete transferable bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$PROJECT_DIR"
+          bundle="${RUNNER_TEMP}/dli-final-gate/bundle"
+          if [[ -n "${ELASTIC_MCP_SOURCE_IMAGE:-}" ]]; then
+            export ELASTIC_MCP_SOURCE_IMAGE
+          else
+            unset ELASTIC_MCP_SOURCE_IMAGE || true
+          fi
+          bash scripts/build-bundle.sh "$bundle"
+
+      - name: Verify bundle contract and checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          bundle="${RUNNER_TEMP}/dli-final-gate/bundle"
+          mapfile -t image_tars < <(find "$bundle/images" -maxdepth 1 -type f -name '*.tar' -printf '%f\n' | sort)
+          printf 'image tar files:\n%s\n' "${image_tars[*]}"
+          [[ ${#image_tars[@]} -eq 4 ]]
+          [[ "${image_tars[*]}" == "elastic-mcp.tar investigator.tar ollama.tar open-webui.tar" ]]
+          test -s "$bundle/runtime/INVESTIGATOR_IMAGE_TAG"
+          test -s "$bundle/runtime/OLLAMA_MODEL"
+          test -d "$bundle/models/ollama/models"
+          (cd "$bundle" && sha256sum -c SHA256SUMS)
+          grep -F 'open-webui=ghcr.io/open-webui/open-webui:0.11.4-slim' "$bundle/IMAGE-MANIFEST.txt"
+          grep -F 'ollama=ollama/ollama:0.34.4' "$bundle/IMAGE-MANIFEST.txt"
+          grep -F 'elastic-mcp=docker.elastic.co/mcp/elasticsearch:0.4.6' "$bundle/IMAGE-MANIFEST.txt"
+
+      - name: Prepare ephemeral staging runtime secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          bundle="${RUNNER_TEMP}/dli-final-gate/bundle"
+          webui_secret="$(python3 - <<'PY'
+          import secrets
+          print(secrets.token_hex(32))
+          PY
+          )"
+          internal_token="$(python3 - <<'PY'
+          import secrets
+          print(secrets.token_hex(32))
+          PY
+          )"
+          umask 077
+          {
+            echo "OPEN_WEBUI_PORT=${DLI_GATE_PORT}"
+            echo "WEBUI_SECRET_KEY=${webui_secret}"
+            echo "INVESTIGATOR_INTERNAL_TOKEN=${internal_token}"
+            printf 'ES_URL=%s\n' "$ES_URL"
+            printf 'ES_API_KEY=%s\n' "$ES_API_KEY"
+            echo "ES_SSL_SKIP_VERIFY=false"
+            echo "OLLAMA_MODEL=qwen3:8b-q4_K_M"
+          } > "$bundle/runtime/.env"
+
+      - name: Prove offline installer uses only bundle artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          bundle="${RUNNER_TEMP}/dli-final-gate/bundle"
+          install_dir="${RUNNER_TEMP}/dli-final-gate/install"
+
+          investigator_tag="$(cat "$bundle/runtime/INVESTIGATOR_IMAGE_TAG")"
+          docker image rm -f \
+            "ghcr.io/open-webui/open-webui:0.11.4-slim" \
+            "ollama/ollama:0.34.4" \
+            "docker.elastic.co/mcp/elasticsearch:0.4.6" \
+            "devops-log-investigator/investigator:${investigator_tag}" >/dev/null 2>&1 || true
+
+          DLI_INSTALL_DIR="$install_dir" bash "$bundle/scripts/install-offline.sh" "$bundle"
+
+          docker image inspect "ghcr.io/open-webui/open-webui:0.11.4-slim" >/dev/null
+          docker image inspect "ollama/ollama:0.34.4" >/dev/null
+          docker image inspect "docker.elastic.co/mcp/elasticsearch:0.4.6" >/dev/null
+          docker image inspect "devops-log-investigator/investigator:${investigator_tag}" >/dev/null
+
+      - name: Wait for four-container runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          install_dir="${RUNNER_TEMP}/dli-final-gate/install"
+          compose=(docker compose --env-file "$install_dir/.env" -f "$install_dir/deploy/compose.yaml")
+
+          for _ in $(seq 1 60); do
+            count="$("${compose[@]}" ps --status running --services | wc -l | tr -d ' ')"
+            investigator_health="$(docker inspect -f '{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' devops-log-investigator-investigator-1 2>/dev/null || true)"
+            ollama_health="$(docker inspect -f '{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' devops-log-investigator-ollama-1 2>/dev/null || true)"
+            if [[ "$count" == "4" && "$investigator_health" == "healthy" && "$ollama_health" == "healthy" ]]; then
+              break
+            fi
+            sleep 5
+          done
+
+          "${compose[@]}" ps
+          [[ "$("${compose[@]}" ps --status running --services | wc -l | tr -d ' ')" == "4" ]]
+          [[ "$(docker inspect -f '{{.State.Health.Status}}' devops-log-investigator-investigator-1)" == "healthy" ]]
+          [[ "$(docker inspect -f '{{.State.Health.Status}}' devops-log-investigator-ollama-1)" == "healthy" ]]
+
+      - name: Runtime health and logical-model API smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          install_dir="${RUNNER_TEMP}/dli-final-gate/install"
+          bash "$install_dir/scripts/health.sh"
+
+          compose=(docker compose --env-file "$install_dir/.env" -f "$install_dir/deploy/compose.yaml")
+          "${compose[@]}" exec -T investigator python - <<'PY'
+          import json, os, urllib.request
+          token = os.environ['INVESTIGATOR_INTERNAL_TOKEN']
+          req = urllib.request.Request(
+              'http://127.0.0.1:8080/v1/models',
+              headers={'Authorization': f'Bearer {token}'},
+          )
+          data = json.load(urllib.request.urlopen(req, timeout=5))
+          ids = [item.get('id') for item in data.get('data', [])]
+          assert ids == ['log-investigator'], ids
+          print('logical model API: PASS', ids)
+          PY
+
+          curl --fail --silent --show-error --max-time 10 "http://127.0.0.1:${DLI_GATE_PORT}/" >/dev/null
+          echo "Open WebUI HTTP: PASS"
+
+      - name: Real Ollama inference smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          install_dir="${RUNNER_TEMP}/dli-final-gate/install"
+          compose=(docker compose --env-file "$install_dir/.env" -f "$install_dir/deploy/compose.yaml")
+          output="$("${compose[@]}" exec -T ollama ollama run qwen3:8b-q4_K_M 'Reply with the single word OK.' 2>&1)"
+          test -n "$output"
+          printf '%s\n' "$output" | tail -n 20
+          echo "Ollama inference: PASS"
+
+      - name: Real MCP-to-Elasticsearch smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          install_dir="${RUNNER_TEMP}/dli-final-gate/install"
+          compose=(docker compose --env-file "$install_dir/.env" -f "$install_dir/deploy/compose.yaml")
+          "${compose[@]}" exec -T investigator python - <<'PY'
+          import asyncio
+          from mcp import Client
+
+          async def main():
+              async with Client('http://elastic-mcp:8080/mcp') as client:
+                  tools = await client.list_tools()
+                  raw = getattr(tools, 'tools', tools)
+                  names = [getattr(t, 'name', None) for t in raw]
+                  print('MCP tools:', names)
+                  assert names, 'MCP exposed no tools'
+                  assert 'list_indices' in names, names
+                  result = await client.call_tool('list_indices', {'index_pattern': 'logs-*'})
+                  assert result is not None
+                  print('MCP list_indices: PASS')
+
+          asyncio.run(main())
+          PY
+
+      - name: Full OpenAI-compatible investigation smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          install_dir="${RUNNER_TEMP}/dli-final-gate/install"
+          compose=(docker compose --env-file "$install_dir/.env" -f "$install_dir/deploy/compose.yaml")
+          "${compose[@]}" exec -T investigator python - <<'PY'
+          import json, os, urllib.request
+          token = os.environ['INVESTIGATOR_INTERNAL_TOKEN']
+          payload = json.dumps({
+              'model': 'log-investigator',
+              'messages': [{'role': 'user', 'content': 'از صبح چند خطای 500 داشتیم؟'}],
+              'stream': False,
+          }).encode()
+          req = urllib.request.Request(
+              'http://127.0.0.1:8080/v1/chat/completions',
+              data=payload,
+              method='POST',
+              headers={
+                  'Authorization': f'Bearer {token}',
+                  'Content-Type': 'application/json',
+              },
+          )
+          with urllib.request.urlopen(req, timeout=180) as response:
+              data = json.load(response)
+          assert data.get('model') == 'log-investigator', data
+          assert data.get('choices'), data
+          meta = data.get('investigator') or {}
+          assert meta.get('status'), data
+          print('investigation status:', meta.get('status'))
+          print('verification:', meta.get('verification'))
+          print('full investigation API: PASS')
+          PY
+
+      - name: Final gate summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "FINAL_GATE_PASS"
+          echo "commit=${GITHUB_SHA}"
+          echo "bundle=4 images + qwen3:8b-q4_K_M"
+          echo "installer=checksum verified + docker load + --pull never"
+          echo "runtime=4 running containers"
+          echo "smoke=Open WebUI + /v1/models + Ollama inference + MCP/Elasticsearch + chat completion"
+
+      - name: Cleanup gate-owned staging resources
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          gate_root="${RUNNER_TEMP}/dli-final-gate"
+          if [[ -f "$gate_root/preflight-owned" ]]; then
+            install_dir="$gate_root/install"
+            if [[ -f "$install_dir/deploy/compose.yaml" && -f "$install_dir/.env" ]]; then
+              docker compose --env-file "$install_dir/.env" -f "$install_dir/deploy/compose.yaml" down --remove-orphans -v
+            fi
+            docker volume rm dli-open-webui-data dli-ollama-data dli-investigator-audit >/dev/null 2>&1 || true
+            rm -rf "$gate_root"
+          fi
