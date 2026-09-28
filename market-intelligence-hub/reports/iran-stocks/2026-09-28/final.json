@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "report_id": "2026-09-28-IR-TSE-1200",
+  "market": "iran_stock",
+  "generated_at": "2026-09-28T12:09:13+03:30",
+  "market_status": "BULLISH",
+  "action_status": "NO_ACTION",
+  "prime_candidates": [],
+  "best_fundamental_gem": null,
+  "best_early_candidate": null,
+  "best_momentum_hunter": null,
+  "highest_conviction": null,
+  "key_risks": [
+    "Overheated breadth: 523 symbols at the permitted price cap.",
+    "No canonical fundamental baseline for any reviewed candidate.",
+    "No candidate has a verified structural R/R of at least 2.",
+    "Fresh 52-week highs and overbought RSI references in several candidates.",
+    "Queue snapshots without time-sequenced confirmation create fake-demand risk.",
+    "Market-wide money flow and index snapshots contain unresolved data conflicts.",
+    "Critical news risk could not be fully verified."
+  ],
+  "key_catalysts": [
+    "Exceptionally positive market breadth.",
+    "Strong verified retail flow and buyer power in فولاد.",
+    "Positive sector rotation in basic metals and mining.",
+    "Potential future pullback/retest entries if technical structure and R/R become verifiable."
+  ],
+  "data_quality": {
+    "overall": "LIMITED_FOR_ACTION",
+    "decision": "NO QUALIFIED PRIME CANDIDATE TODAY",
+    "reason": "This is inability to validate an actionable candidate, not proof that no opportunity exists. At least one of Core Fundamental, audited Technical, complete News risk, or structural R/R is missing for every candidate.",
+    "symbols_reviewed": 6,
+    "finalists_count": 0,
+    "semantic_validation": "PASS",
+    "sources": [
+      {
+        "name": "Canonical Scout JSON",
+        "url": "https://github.com/esi-ubuntu/esi-ubuntu/blob/main/market-intelligence-hub/reports/iran-stocks/2026-09-28/scout.json",
+        "date": "2026-09-28",
+        "role": "same-day handoff"
+      },
+      {
+        "name": "Tindex فولاد",
+        "url": "https://tindex.app/stocks/%D9%81%D9%88%D9%84%D8%A7%D8%AF/",
+        "date": "1405-07-06",
+        "role": "independent live cross-check; cites TSETMC"
+      },
+      {
+        "name": "Tindex فسوژ",
+        "url": "https://tindex.app/stocks/%D9%81%D8%B3%D9%88%DA%98/",
+        "date": "1405-07-06",
+        "role": "independent live cross-check; cites TSETMC"
+      },
+      {
+        "name": "Tindex فزر",
+        "url": "https://tindex.app/stocks/%D9%81%D8%B2%D8%B1/",
+        "date": "1405-07-06",
+        "role": "independent live cross-check; cites TSETMC"
+      },
+      {
+        "name": "Tindex فصبا",
+        "url": "https://tindex.app/stocks/%D9%81%D8%B5%D8%A8%D8%A7/",
+        "date": "1405-07-06",
+        "role": "independent live cross-check; cites TSETMC"
+      },
+      {
+        "name": "Tindex فسپا",
+        "url": "https://tindex.app/stocks/%D9%81%D8%B3%D9%BE%D8%A7/",
+        "date": "1405-07-06",
+        "role": "independent live cross-check; cites TSETMC"
+      },
+      {
+        "name": "Tindex وصندوق",
+        "url": "https://tindex.app/stocks/%D9%88%D8%B5%D9%86%D8%AF%D9%88%D9%82/",
+        "date": "1405-07-06",
+        "role": "independent live cross-check; cites TSETMC"
+      }
+    ]
+  }
+}
