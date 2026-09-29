@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "report_id": "2026-09-29-IR-TSE-1200",
+  "market": "iran_stock",
+  "generated_at": "2026-09-29T12:06:53+03:30",
+  "market_status": "BULLISH",
+  "action_status": "NO_ACTION",
+  "prime_candidates": [],
+  "best_fundamental_gem": null,
+  "best_early_candidate": null,
+  "best_momentum_hunter": null,
+  "highest_conviction": null,
+  "key_risks": [
+    "SCOUT_NOT_AVAILABLE: same-day canonical handoff missing.",
+    "Overheated breadth with 531 symbols at the permitted price cap.",
+    "Market-wide real-money flow is DATA_CONFLICT.",
+    "No canonical fundamental baseline for any independently reviewed candidate.",
+    "No candidate has a verified structural R/R of at least 2.",
+    "Technical and critical-news validation are incomplete.",
+    "Fresh 52-week highs in فخوز and صبا create chase risk."
+  ],
+  "key_catalysts": [
+    "Strong positive breadth: 842 positive versus 204 negative symbols.",
+    "Basic metals and refinery industries were among strong sectors.",
+    "فخوز showed trade value about 2.08x its 30-session average and positive retail flow.",
+    "فولاد retained high liquidity, positive retail flow and a low observed P/E."
+  ],
+  "data_quality": {
+    "overall": "LIMITED_FOR_ACTION",
+    "scout_status": "SCOUT_NOT_AVAILABLE",
+    "decision": "NO QUALIFIED PRIME CANDIDATE TODAY",
+    "reason": "The market was strong, but the complete fundamental, technical, news and entry-risk evidence required for action was not available for any candidate.",
+    "symbols_deep_reviewed": 4,
+    "finalists_count": 0,
+    "semantic_validation": "PASS",
+    "sources": [
+      {
+        "name": "Tindex live Tehran market",
+        "url": "https://tindex.app/stocks/",
+        "date": "1405-07-07",
+        "role": "current market breadth, liquidity, symbol ranking; cites TSETMC"
+      },
+      {
+        "name": "Tindex market indicators",
+        "url": "https://tindex.app/indicators/tse-market/",
+        "date": "1405-07-07",
+        "role": "cross-check of aggregate market metrics"
+      },
+      {
+        "name": "Tindex screener",
+        "url": "https://tindex.app/stocks/screener/",
+        "date": "1405-07-07",
+        "role": "full-market secondary screen"
+      },
+      {
+        "name": "Tindex فولاد",
+        "url": "https://tindex.app/stocks/%D9%81%D9%88%D9%84%D8%A7%D8%AF/",
+        "date": "1405-07-07",
+        "role": "candidate cross-check"
+      },
+      {
+        "name": "Tindex فخوز",
+        "url": "https://tindex.app/stocks/%D9%81%D8%AE%D9%88%D8%B2/",
+        "date": "1405-07-07",
+        "role": "candidate cross-check"
+      },
+      {
+        "name": "Tindex شپنا",
+        "url": "https://tindex.app/stocks/%D8%B4%D9%BE%D9%86%D8%A7/",
+        "date": "1405-07-07",
+        "role": "candidate cross-check"
+      },
+      {
+        "name": "Tindex صبا",
+        "url": "https://tindex.app/stocks/%D8%B5%D8%A8%D8%A7/",
+        "date": "1405-07-07",
+        "role": "candidate cross-check"
+      }
+    ]
+  }
+}
