@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "report_id": "2026-09-29-IR-TSE-1200",
+  "market": "iran_stock",
+  "generated_at": "2026-09-29T12:10:00+03:30",
+  "agent": {
+    "role": "MARKET_SCOUT",
+    "prompt_version": "1.1",
+    "contract_version": "1.2",
+    "run_type": "fallback"
+  },
+  "market_status": {
+    "status": "DATA_CONFLICT",
+    "action": "SELECTIVE",
+    "summary": "Fresh same-day public sources confirm a broadly positive session, but material aggregate market figures are internally inconsistent across fresh sources and cannot be reconciled to canonical official data in this run. The report is therefore persisted without forcing weak candidates.",
+    "total_index": "DATA_CONFLICT",
+    "equal_weight_index": "DATA_NOT_VERIFIED",
+    "trading_value": "DATA_NOT_VERIFIED",
+    "trading_volume": "DATA_NOT_VERIFIED",
+    "real_person_money_flow": "DATA_NOT_VERIFIED",
+    "queues": "DATA_NOT_VERIFIED",
+    "industries": "DATA_NOT_VERIFIED",
+    "material_news": [
+      "Same-day market coverage reports continued positive market breadth and strong demand after the prior session's sharp rise.",
+      "Fresh reports cite continued focus on large-cap, export-oriented and commodity-linked industries, but exact canonical breadth/flow figures were not independently verified."
+    ]
+  },
+  "candidates": [],
+  "top_5": [],
+  "best_early_candidate": null,
+  "best_momentum_hunter": null,
+  "best_potential_prime": null,
+  "data_quality": {
+    "status": "PARTIAL",
+    "official_market_snapshot": "DATA_NOT_VERIFIED",
+    "fundamental_state": "No candidate was assigned a Core Fundamental Score; no daily fundamental recomputation was performed.",
+    "continuity_rule": "Run completed and persisted despite incomplete/conflicting fresh data; weak names were not inserted to fill the list.",
+    "sources": [
+      "Fresh 2026-09-29 market coverage retrieved during this run",
+      "Canonical GitHub prompt and shared analysis contract"
+    ]
+  }
+}
