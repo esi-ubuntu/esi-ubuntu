@@ -1,40 +1,61 @@
-# Iran Stock Market Scout — 2026-09-29
+# گزارش Scout بازار سهام ایران — ۷ مهر ۱۴۰۵
 
-**REPORT_ID:** `2026-09-29-IR-TSE-1200`
+**REPORT_ID:** `2026-09-29-IR-TSE-1200`  
+**زمان تهیه:** 2026-09-29 12:11 تهران  
+**وضعیت اقدام:** `FAVORABLE_SELECTIVE_NO_CHASE_HIGH_HEAT`
 
-## Market Action
+## جمع‌بندی بازار
 
-**SELECTIVE**
+بازار همچنان به‌طور معناداری مثبت بود: از ۱٬۱۰۱ نماد معامله‌شده، ۸۴۲ نماد مثبت، ۲۰۴ نماد منفی و ۵۵ نماد بدون تغییر بودند؛ نسبت مثبت به منفی ۴٫۱۳ بود. ۵۳۱ نماد در سقف مجاز و ۲۲ نماد در کف مجاز قرار داشتند. ارزش معاملات ۲۳٬۱۶۰ میلیارد تومان، حجم معاملات ۵۷٫۴۳ میلیارد سهم و میانگین P/E بازار ۱۴٫۵۲ ثبت شد. شاخص کل به ۷٬۵۸۵٬۵۴۱٫۱۱ رسید و ۱۲۶٬۲۰۳٫۳۷ واحد، معادل ۲٫۷۹٪، رشد کرد. منابع: [بازار زنده تیندکس](https://tindex.app/stocks/)، [نماگرهای بازار](https://tindex.app/indicators/tse-market/)، [شاخص کل TGJU](https://www.tgju.org/profile/bourse).
 
-Fresh same-day public sources confirm a broadly positive session, but material aggregate market figures available during this run were internally inconsistent and could not be reconciled against a canonical official snapshot. Per the shared continuity contract, the run was not canceled: unverifiable fields are marked `DATA_NOT_VERIFIED` / `DATA_CONFLICT`, and no weak names are inserted merely to fill the candidate list.
+رهبری بازار با پالایشی‌ها (+۲٫۹۵٪)، چندرشته‌ای‌ها (+۲٫۸۴٪)، فلزات اساسی (+۲٫۴۵٪)، سیمان (+۲٫۰۱٪) و کانه‌های فلزی (+۱٫۸۳٪) بود. با وجود پهنای مثبت، ۵۳۱ صف خرید و تعدد سقف‌های سالانه نشان می‌دهد دمای بازار بالاست؛ راهبرد مناسب، انتخاب نقدشونده‌ها و ورود پس از پول‌بک/تأیید است، نه تعقیب صف. منبع: [بازار زنده تیندکس](https://tindex.app/stocks/).
 
-## Market Status
+جریان پول حقیقی کل بازار `DATA_CONFLICT` است: دو نمای هم‌تاریخ تیندکس به‌ترتیب +۴٬۱۳۵ و −۳۱٬۰۹۷٫۲ میلیارد تومان نشان دادند؛ این عدد از رتبه‌بندی حذف شد. شاخص هم‌وزن نیز `DATA_NOT_VERIFIED` است.
 
-- Overall status: `DATA_CONFLICT`
-- Total index: `DATA_CONFLICT`
-- Equal-weight index: `DATA_NOT_VERIFIED`
-- Trading value: `DATA_NOT_VERIFIED`
-- Trading volume: `DATA_NOT_VERIFIED`
-- Real-person money flow: `DATA_NOT_VERIFIED`
-- Queue aggregate: `DATA_NOT_VERIFIED`
-- Industry ranking: `DATA_NOT_VERIFIED`
+## Top 5
 
-Same-day coverage indicates continued positive breadth/demand following the prior session's sharp advance, with attention on large-cap and commodity/export-linked groups. Exact canonical aggregate figures were not sufficiently verified for inclusion as facts.
+| رتبه | نماد | برچسب Scout | قیمت آخر (ریال) | تغییر | جریان حقیقی (میلیارد تومان) | قدرت خریدار | Tape | اقدام |
+|---:|---|---|---:|---:|---:|---:|---:|---|
+| ۱ | فملی | LIQUID_ACCUMULATION_WATCH | ۲۶٬۶۰۰ | +۲٫۹۸٪ | +۱٬۱۲۹٫۳ | ۵٫۶۹ | ۹۰ | تعقیب نشود؛ پول‌بک زیر سقف روز و حفظ قدرت خریدار |
+| ۲ | فولاد | LIQUID_ACCUMULATION_WATCH | ۳٬۵۲۰ | +۲٫۹۲٪ | +۵۳۵٫۱ | ۱٫۴۵ | ۸۸ | پول‌بک/حفظ ۳٬۴۵۰ و تجدید قدرت خرید |
+| ۳ | فصبا | MOMENTUM_WATCH | ۴٬۲۸۰ | +۲٫۸۸٪ | +۱۰۷٫۴ | ۴٫۶۲ | ۸۶ | پس از بررسی گزارش ماهانه و تثبیت بالای ۴٬۱۷۰ |
+| ۴ | فسپا | BREAKOUT_WATCH | ۹٬۰۲۰ | +۲٫۹۷٪ | +۳۰۵٫۷ | ۲۱٫۷۸ | ۸۸ | به‌علت RSI=88.75 و سقف تازه، فقط پس از پول‌بک نقدشونده |
+| ۵ | فخوز | LIQUID_BREAKOUT_WATCH | ۳٬۲۰۷ | +۲٫۹۹٪ | +۸۹۱٫۷ | ۱٫۱۲ | ۸۵ | با قدرت خریدار ضعیف‌تر، منتظر پول‌بک و بررسی کدال |
 
-## Candidate Screen
+### ۱) فملی
 
-**NO QUALIFIED CANDIDATE**
+بهترین ترکیب امروز از نقدشوندگی بزرگ‌مقیاس، ورود پول +۱٬۱۲۹٫۳ میلیارد تومان، قدرت خریدار ۵٫۶۹ و تقاضای ۲۵۱٫۶ میلیون سهم در برابر عرضه ۸۹٫۹ هزار سهم بود. قیمت ۴٫۸٪ زیر سقف ۵۲ هفته قرار دارد، اما ارزش معامله فقط حدود ۳۱٪ میانگین ۳۰روزه بود. گزارش فعالیت ماهانه ۱۴۰۵/۰۶/۳۱ در ۶ مهر منتشر شده، بنابراین وضعیت بنیادی `FUNDAMENTAL_REVIEW_REQUIRED` است و هیچ امتیاز بنیادی ساخته یا تغییر داده نشد. [داده نماد فملی](https://tindex.app/stocks/%D9%81%D9%85%D9%84%DB%8C/)
 
-The available fresh data was not sufficient to establish the complete combination of verified technical structure, tape quality, R/R, news risk and canonical fundamental state required by the Scout thresholds. No candidate was assigned a new Core Fundamental Score and no daily fundamental recomputation was performed.
+### ۲) فولاد
 
-## TOP 5
+بیشترین کیفیت نقدشوندگی در فهرست: ۲٫۳ میلیارد سهم و ۷٬۹۱۳٫۲ میلیارد تومان معامله، ورود پول +۵۳۵٫۱ میلیارد تومان و صف تقاضای ۲ میلیارد سهم بدون عرضه. P/E برابر ۶٫۸ و فاصله معنادار تا سقف سالانه ۴٬۴۹۰ ریال دارد؛ با این حال قدرت خریدار ۱٫۴۵ است و امتیازهای بنیادی/تکنیکال کانونی موجود نیستند. [داده نماد فولاد](https://tindex.app/stocks/%D9%81%D9%88%D9%84%D8%A7%D8%AF/)
 
-No symbols were added merely to fill the list.
+### ۳) فصبا
 
-- Best Early Candidate: `NONE`
-- Best Momentum Hunter: `NONE`
-- Best Potential Prime: `NONE`
+ارزش معامله ۳۴۹٫۴ میلیارد تومان بالاتر از میانگین ۲۳۰ میلیارد تومانی، ورود پول +۱۰۷٫۴ میلیارد تومان، قدرت خریدار ۴٫۶۲ و تقاضای ۴۵٫۲ میلیون سهم بدون عرضه ثبت شد. قیمت در سقف تازه ۵۲ هفته است و گزارش ماهانه ۴ مهر هنوز نیازمند بررسی بنیادی است؛ ورود مستقیم در صف توصیه نمی‌شود. [داده نماد فصبا](https://tindex.app/stocks/%D9%81%D8%B5%D8%A8%D8%A7/)
 
-## Data Quality
+### ۴) فسپا
 
-Status: **PARTIAL**. The monitoring run completed rather than being canceled. Material unavailable fields are explicitly marked, preserving the canonical rule that a valid empty-candidate report is preferable to a missing report or invented data.
+قدرت خریدار ۲۱٫۷۸، ورود پول +۳۰۵٫۷ میلیارد تومان و تقاضای ۱۰۸٫۸ میلیون سهم بدون عرضه بسیار قوی است. در مقابل، امتیاز تکنیکال بیرونی ۸۹٫۸۲ همراه RSI=88.75، سقف تازه ۵۲ هفته و گزارش ماهانه جدید، ریسک تعقیب را بالا می‌برد. امتیاز تکنیکال بیرونی صرفاً مرجع است و جایگزین محاسبه کانونی نیست. [داده نماد فسپا](https://tindex.app/stocks/%D9%81%D8%B3%D9%BE%D8%A7/)
+
+### ۵) فخوز
+
+۲٫۵ میلیارد سهم و ۷٬۹۶۴٫۸ میلیارد تومان معامله شد؛ ارزش امروز بیش از دو برابر میانگین ۳۰روزه و ورود پول +۸۹۱٫۷ میلیارد تومان بود. با این حال قدرت خریدار فقط ۱٫۱۲، قیمت در سقف تازه سالانه و بازده یک‌ماهه +۶۶٫۱٪ است. گزارش ماهانه ۵ مهر نیز بررسی بنیادی می‌خواهد. [داده نماد فخوز](https://tindex.app/stocks/%D9%81%D8%AE%D9%88%D8%B2/)
+
+## فهرست تکمیلی
+
+- **فسوژ — رتبه ۶:** تکنیکال بیرونی ۸۹٫۹۱ و قدرت خریدار ۱۰٫۳۶، اما RSI=79.24 و ارزش معامله فقط حدود ۱۱٪ میانگین ۳۰روزه؛ `OVEREXTENDED_MOMENTUM_WATCH`. [داده نماد فسوژ](https://tindex.app/stocks/%D9%81%D8%B3%D9%88%DA%98/)
+- **فزر — رتبه ۷:** تکنیکال بیرونی ۸۹٫۰۷ و قدرت خریدار ۲٫۷۰، اما RSI=87.98، P/E=35.8 و ارزش معامله حدود ۷٪ میانگین ۳۰روزه؛ `OVEREXTENDED_BREAKOUT_WATCH`. [داده نماد فزر](https://tindex.app/stocks/%D9%81%D8%B2%D8%B1/)
+- **کگل — رتبه ۸:** نقدشوندگی بالا، اما خروج پول −۴۹۷٫۹ میلیارد تومان، قدرت خریدار ۰٫۵۴ و قیمت آخر پایین‌تر از پایانی؛ `DISTRIBUTION_WATCH`. [داده نماد کگل](https://tindex.app/stocks/%DA%A9%DA%AF%D9%84/)
+
+## آزمون برچسب‌های رسمی
+
+- **Best Early Candidate:** `NONE` — هیچ نمادی امتیاز بنیادی کانونیِ تأییدشده ≥۷۰ همراه با ساختار زودهنگام نداشت.
+- **Best Momentum Hunter:** `NONE` — با وجود مومنتوم قوی، نسبت سود به زیانِ قابل دفاع ≥۲ برای هیچ نامزد دارای همه ورودی‌های لازم تأیید نشد.
+- **Best Potential Prime:** `NONE` — baseline بنیادی کانونی وجود ندارد و مجموعه کامل بنیادی، تکنیکال، Tape، R/R و ریسک خبر برای هیچ نماد تکمیل نشد.
+
+## کیفیت داده و کنترل ریسک
+
+اسکن تمام ۱٬۱۶۱ نماد فعال انجام شد و ۸ نامزد نگه داشته شدند. کیفیت کلی `MEDIUM` است. قیمت‌ها، معاملات، حقیقی/حقوقی و عمق سفارش از صفحات زنده تیندکس با تصریح منبع TSETMC اخذ شد؛ شاخص کل با TGJU تطبیق داده شد. دسترسی مستقیم به endpointهای TSETMC فراهم نبود، جریان پول کل بازار تعارض داشت، شاخص هم‌وزن تأیید نشد و state بنیادی کانونی برای این نمادها وجود نداشت. بنابراین هیچ امتیاز بنیادی روزانه محاسبه یا بازنویسی نشد. داده‌های عمق بازار لحظه‌ای‌اند و پس از زمان گزارش می‌توانند تغییر کنند.
+
+این گزارش فهرست پایش و سناریوی ورود است، نه توصیه قطعی خرید یا فروش.
