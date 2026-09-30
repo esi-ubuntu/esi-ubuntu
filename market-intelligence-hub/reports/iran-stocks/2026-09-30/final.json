@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "report_id": "2026-09-30-IR-TSE-1200",
+  "market": "iran_stock",
+  "generated_at": "2026-09-30T12:09:25+03:30",
+  "market_status": "BULLISH",
+  "action_status": "NO_ACTION",
+  "prime_candidates": [],
+  "best_fundamental_gem": null,
+  "best_early_candidate": null,
+  "best_momentum_hunter": null,
+  "highest_conviction": null,
+  "key_risks": [
+    "No complete five-component score was valid for any inspected symbol.",
+    "Canonical fundamental baselines were missing for all independently inspected symbols.",
+    "Several liquid leaders were near 52-week highs or had weak relative turnover.",
+    "Market-wide real-person money-flow readings conflicted across same-day source views."
+  ],
+  "key_catalysts": [
+    "Broad market participation remained strongly positive.",
+    "Banks, basic metals, refineries, mining and autos showed positive sector breadth.",
+    "وبملت، فملی and شپنا recorded positive observed real-person money flow, but this was insufficient for action."
+  ],
+  "data_quality": {
+    "status": "PARTIAL_VERIFIED_INSUFFICIENT_FOR_ACTION",
+    "scout_status": "FOUND_AND_REPORT_ID_MATCHED_EMPTY_CANDIDATE_SET",
+    "symbols_deeply_checked": 4,
+    "finalists": 0,
+    "reason": "This is inability to validate an actionable opportunity with complete fundamental, valuation, technical, tape, news and risk/reward evidence; it is not proof that no opportunity exists.",
+    "semantic_validation": "PASS"
+  }
+}
