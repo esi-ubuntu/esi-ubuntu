@@ -1,0 +1,162 @@
+{
+  "schema_version": "1.0",
+  "report_id": "2026-09-30-IR-TSE-1200",
+  "market": "iran_stock",
+  "generated_at": "2026-09-30T12:09:25+03:30",
+  "agent": {
+    "name": "Iran Stock Chief Market Analyst & Final Auditor",
+    "workflow": "market-intelligence-hub/prompts/iran-stock-auditor.md",
+    "prompt_version": "1.1",
+    "contract_version": "1.2"
+  },
+  "scout_report_found": true,
+  "scout_validation": [],
+  "missed_candidates": [
+    {
+      "rank": 1,
+      "symbol": "وبملت",
+      "decision": "WATCH_ONLY",
+      "core_fundamental": null,
+      "fundamental_status": "DATA_NOT_VERIFIED_NO_CANONICAL_BASELINE_NEW_MONTHLY_REPORT",
+      "daily_valuation": null,
+      "technical": null,
+      "tape": null,
+      "news": null,
+      "risk_reward": null,
+      "evidence": {
+        "last_price_irr": 1529,
+        "close_price_irr": 1519,
+        "last_vs_close_percent": 0.66,
+        "volume_shares": 7700000000,
+        "trade_value_billion_toman": 11710.2,
+        "relative_trade_value_vs_30d": 0.904,
+        "pe": 3.3,
+        "real_money_flow_billion_toman": 1049.9,
+        "buyer_power": 1.71
+      },
+      "reason": "Valuation and tape are comparatively constructive, but last price is less than 1% above close, turnover is below the 30-session average, the new corrected monthly report is not audited here, and technical/news/entry-risk evidence is incomplete."
+    },
+    {
+      "rank": 2,
+      "symbol": "فملی",
+      "decision": "DOWNGRADED_OVEREXTENDED_WATCH",
+      "core_fundamental": null,
+      "fundamental_status": "DATA_NOT_VERIFIED_NO_CANONICAL_BASELINE_NEW_MONTHLY_REPORT",
+      "daily_valuation": null,
+      "technical": null,
+      "tape": null,
+      "news": null,
+      "risk_reward": null,
+      "evidence": {
+        "last_price_irr": 27390,
+        "close_price_irr": 27390,
+        "distance_to_52w_high_percent": 1.72,
+        "trade_value_billion_toman": 5154.1,
+        "relative_trade_value_vs_30d": 0.43,
+        "pe": 19.4,
+        "market_average_pe": 14.87,
+        "real_money_flow_billion_toman": 1433.3,
+        "buyer_power": 3.18
+      },
+      "reason": "Strong real-person demand is offset by proximity to the 52-week high, P/E above the market average, turnover at only 43% of its 30-session average, and lack of a defensible entry/stop/target structure."
+    },
+    {
+      "rank": 3,
+      "symbol": "شپنا",
+      "decision": "DOWNGRADED_WATCH_ONLY",
+      "core_fundamental": null,
+      "fundamental_status": "DATA_NOT_VERIFIED_NO_CANONICAL_BASELINE_NEW_MONTHLY_REPORT",
+      "daily_valuation": null,
+      "technical": null,
+      "tape": null,
+      "news": null,
+      "risk_reward": null,
+      "evidence": {
+        "last_price_irr": 13720,
+        "close_price_irr": 13710,
+        "trade_value_billion_toman": 8215.8,
+        "relative_trade_value_vs_30d": 0.821,
+        "pe": 7.5,
+        "real_money_flow_billion_toman": 1288.9,
+        "buyer_power": 0.95,
+        "six_month_return_percent": 123.7
+      },
+      "reason": "Positive money flow and moderate observed P/E do not overcome buyer power below one, supply above demand, below-average turnover and an overextended six-month move."
+    },
+    {
+      "rank": 4,
+      "symbol": "فخوز",
+      "decision": "REJECTED",
+      "core_fundamental": null,
+      "fundamental_status": "DATA_NOT_VERIFIED_NO_CANONICAL_BASELINE_NEW_MONTHLY_REPORT",
+      "daily_valuation": null,
+      "technical": null,
+      "tape": null,
+      "news": null,
+      "risk_reward": null,
+      "evidence": {
+        "last_price_irr": 3300,
+        "close_price_irr": 3295,
+        "distance_to_52w_high_percent": 0.06,
+        "trade_value_billion_toman": 5347.3,
+        "relative_trade_value_vs_30d": 1.367,
+        "pe": 14.8,
+        "real_money_flow_billion_toman": -1631.8,
+        "buyer_power": 0.44,
+        "supply_to_demand_ratio": 10.38
+      },
+      "reason": "The symbol is effectively at its 52-week high while showing material real-person outflow, buyer power 0.44 and supply more than ten times demand; false-breakout/distribution risk is high."
+    }
+  ],
+  "finalists": [],
+  "market_action_status": "NO_ACTION",
+  "data_quality": {
+    "status": "PARTIAL_VERIFIED_INSUFFICIENT_FOR_ACTION",
+    "scout_status": "FOUND_AND_REPORT_ID_MATCHED_EMPTY_CANDIDATE_SET",
+    "symbols_deeply_checked": 4,
+    "symbols_with_missing_critical_data": 4,
+    "market_status": "BULLISH_OVERHEATED",
+    "market_breadth": {
+      "positive": 959,
+      "negative": 105,
+      "unchanged": 30,
+      "traded": 1094,
+      "price_ceiling": 414
+    },
+    "market_trade_value_billion_toman": 30153,
+    "market_trade_volume_billion_shares": 89.09,
+    "market_average_pe": 14.87,
+    "market_money_flow": {
+      "status": "DATA_CONFLICT",
+      "value_1_billion_toman": 867,
+      "value_2_billion_toman": 5298.2,
+      "treatment": "EXCLUDED_FROM_RANKING"
+    },
+    "limitations": [
+      "The Scout file contained no candidates, so there were no symbol-level Scout decisions to validate.",
+      "No canonical fundamental state file existed for the four independently inspected symbols; Core Fundamental scores were not invented.",
+      "Complete adjusted historical series for EMA20/50/100/200, RSI14, MACD, BOS/CHoCH and support/resistance was unavailable in a directly verifiable form.",
+      "Current-session candles were not treated as closed candles.",
+      "Complete same-day company, industry, macro and geopolitical news coverage was not verified.",
+      "Without valid entry, stop and targets, risk/reward was not calculated and no candidate was made actionable.",
+      "The market-wide money-flow sources conflict and were excluded from ranking."
+    ],
+    "false_positive_controls": [
+      "No chase near 52-week highs",
+      "No inference of accumulation from one intraday snapshot",
+      "Relative turnover checked against 30-session average",
+      "Buyer power and demand/supply imbalance checked",
+      "Missing critical data prevents a complete score"
+    ],
+    "sources": [
+      "https://github.com/esi-ubuntu/esi-ubuntu/blob/main/market-intelligence-hub/reports/iran-stocks/2026-09-30/scout.json",
+      "https://tindex.app/stocks/",
+      "https://tindex.app/indicators/tse-market/",
+      "https://tindex.app/stocks/%D9%88%D8%A8%D9%85%D9%84%D8%AA/",
+      "https://tindex.app/stocks/%D9%81%D9%85%D9%84%DB%8C/",
+      "https://tindex.app/stocks/%D8%B4%D9%BE%D9%86%D8%A7/",
+      "https://tindex.app/stocks/%D9%81%D8%AE%D9%88%D8%B2/"
+    ],
+    "semantic_validation": "PASS"
+  }
+}
