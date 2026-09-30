@@ -1,40 +1,65 @@
-# Iran Stock Market Scout — 2026-09-30
+# گزارش Scout بازار سهام ایران — ۸ مهر ۱۴۰۵
 
-**REPORT_ID:** `2026-09-30-IR-TSE-1200`
+**REPORT_ID:** `2026-09-30-IR-TSE-1200`  
+**زمان تهیه:** 2026-09-30 12:16 تهران  
+**وضعیت اقدام:** `FAVORABLE_SELECTIVE_NO_CHASE_HIGH_HEAT`
 
-## Market Status
+## جمع‌بندی بازار
 
-**BULLISH / OVERHEATED — SELECTIVE, NO CHASE**
+بازار برای سومین جلسه متوالی پهنای مثبت قدرتمندی داشت: از ۱٬۰۹۴ نماد معامله‌شده، ۹۵۹ نماد مثبت، ۱۰۵ نماد منفی و ۳۰ نماد بدون تغییر بودند. نسبت مثبت به منفی ۹٫۱۳، ارزش معاملات ۳۰٬۱۵۳ میلیارد تومان و حجم معاملات ۸۹٫۰۹ میلیارد سهم بود. ۴۱۴ نماد در سقف و ۷۰ نماد در کف مجاز قرار داشتند. [بازار زنده تیندکس](https://tindex.app/stocks/) — [نماگرهای بازار](https://tindex.app/indicators/tse-market/)
 
-Verified same-day reporting places the Tehran Stock Exchange total index at **7,741,244**, up **1.93%**, and the equal-weight index at **2,056,849**, up **1.32%**. The total index set another record in the 7.7 million area.
+شاخص کل به ۷٬۷۵۸٬۸۷۰٫۴ رسید و ۱۶۳٬۹۱۳ واحد، معادل ۲٫۱۶٪، رشد کرد. شاخص هم‌وزن در این اجرا مستقلاً تأیید نشد و `DATA_NOT_VERIFIED` باقی ماند. [شاخص کل TGJU](https://www.tgju.org/profile/bourse)
 
-Market-wide real-person money flow is `DATA_CONFLICT`: current same-day reports describe different intraday snapshots, including continued outflow early in the session and approximately 1.5 trillion toman inflow by mid-session. The exact figure is therefore excluded from ranking.
+جریان پول حقیقی کل بازار `DATA_CONFLICT` است: نمای اصلی تیندکس +۵٬۲۹۸٫۲ میلیارد تومان و صفحه شاخص اختصاصی +۸۶۷ میلیارد تومان نمایش دادند؛ این عدد از رتبه‌بندی حذف شد. صنایع حمل‌ونقل (+۳٫۳۳٪)، خدمات فنی و مهندسی (+۲٫۹۶٪)، ساخت محصولات فلزی (+۲٫۸۹٪)، چندرشته‌ای‌ها (+۲٫۷۸٪)، خودرو و کانه‌های فلزی (هر دو +۲٫۷۶٪) پیشتاز بودند.
 
-Full-market symbol-level tape, technical structure, support/resistance and canonical fundamental state were not sufficiently verifiable in this fallback run. Per the shared analysis contract, the run continued rather than being canceled, and no prior-day candidate was promoted using stale symbol-level data.
+جمع‌بندی عملی: بازار مساعد اما داغ است. اولویت با نقدشوندگی، جذب عرضه و پول‌بک معتبر است؛ صف خرید به‌تنهایی مجوز ورود نیست.
 
-## Qualified Candidates
+## Top 5
 
-`NO QUALIFIED CANDIDATE`
+| رتبه | نماد | برچسب Scout | قیمت آخر (ریال) | جریان حقیقی (میلیارد تومان) | قدرت خریدار | Tape | تصمیم |
+|---:|---|---|---:|---:|---:|---:|---|
+| ۱ | فولاد | LIQUID_ACCUMULATION_WATCH | ۳٬۶۲۰ | +۳٬۰۹۱٫۲ | ۱۱٫۹۴ | ۹۴ | بهترین Tape؛ فقط پس از عرضه و پول‌بک |
+| ۲ | خودرو | LIQUID_MOMENTUM_WATCH | ۶۹۲ | +۱٬۴۳۹٫۳ | ۲٫۴۷ | ۹۱ | R/R مرجع ۲٫۸۵؛ منوط به حفظ ۶۵۹ و بررسی بنیاد |
+| ۳ | وبملت | LIQUID_ACCUMULATION_WATCH | ۱٬۵۲۹ | +۱٬۰۴۹٫۹ | ۱٫۷۱ | ۸۹ | نقدشوندگی عالی؛ R/R فعلی ۱٫۵۸ و زیر حد رسمی |
+| ۴ | فملی | LIQUID_BREAKOUT_WATCH | ۲۷٬۳۹۰ | +۱٬۴۳۳٫۳ | ۳٫۱۸ | ۸۹ | فقط ۱٫۷۵٪ تا سقف سال؛ تعقیب نشود |
+| ۵ | فصبا | OVEREXTENDED_MOMENTUM_WATCH | ۴٬۴۰۰ | +۱۰۳٫۷ | ۷٫۵۷ | ۸۶ | سقف تازه؛ منتظر پول‌بک بالای ۴٬۳۳۰ |
 
-The list is intentionally empty. No weak or incompletely verified name is inserted merely to fill the Top 5.
+### ۱) فولاد
 
-## Fundamental State
+ورود پول حقیقی ۳٬۰۹۱٫۲ میلیارد تومان، قدرت خریدار ۱۱٫۹۴، حجم ۱٫۴ میلیارد سهم و تقاضای ۲٫۱ میلیارد سهم بدون عرضه، قوی‌ترین Tape فهرست را ساخته است. با این حال ارزش معامله کمتر از نصف میانگین ۳۰روزه و سهم در صف خرید بوده است. گزارش فعالیت ماهانه ۷ مهر منتشر شده، بنابراین وضعیت بنیاد `FUNDAMENTAL_REVIEW_REQUIRED` است. [داده نماد فولاد](https://tindex.app/stocks/%D9%81%D9%88%D9%84%D8%A7%D8%AF/)
 
-Core Fundamental scores were **not recomputed**. No canonical score was invented or changed. Daily price action, market heat and tape conditions were not allowed to alter fundamental state.
+### ۲) خودرو
 
-## Scout Output
+حجم ۶٫۴ میلیارد سهم، ورود پول ۱٬۴۳۹٫۳ میلیارد تومان، قدرت خریدار ۲٫۴۷ و تقاضای ۷٫۳ میلیارد سهم در برابر عرضه ۳۸۷ هزار سهم ثبت شد. نسبت سود به زیان مرجع از ۶۹۲ تا سقف ۷۸۶ با حد ۶۵۹ حدود ۲٫۸۵ است، اما EPS منفی، تکنیکال تأییدنشده و گزارش ماهانه جدید مانع اعطای برچسب رسمی Momentum Hunter شدند. [داده نماد خودرو](https://tindex.app/stocks/%D8%AE%D9%88%D8%AF%D8%B1%D9%88/)
 
-- Best Early Candidate: `NONE`
-- Best Momentum Hunter: `NONE`
-- Best Potential Prime: `NONE`
-- Market Action: **SELECTIVE_NO_CHASE**
+### ۳) وبملت
 
-## Data Quality
+نقدشونده‌ترین سهم فهرست با ۷٫۷ میلیارد سهم و ۱۱٬۷۱۰٫۲ میلیارد تومان معامله بود. ورود پول ۱٬۰۴۹٫۹ میلیارد تومان، قدرت خریدار ۱٫۷۱ و تقاضای ۳۳۷٫۲ میلیون سهم ثبت شد. R/R مرجع تا سقف سالانه فقط ۱٫۵۸ است و اصلاحیه گزارش ماهانه ۷ مهر باید بررسی شود. [داده نماد وبملت](https://tindex.app/stocks/%D9%88%D8%A8%D9%85%D9%84%D8%AA/)
 
-`PARTIAL_VERIFIED_NO_QUALIFIED_CANDIDATE`
+### ۴) فملی
 
-Verified: same-day total/equal-weight index direction and levels.  
-`DATA_CONFLICT`: exact market-wide real-person money flow.  
-`DATA_NOT_VERIFIED`: comprehensive same-day full-market symbol tape/technical stack, exact breadth, queues, total trade value and total trade volume for canonical ranking.
+ورود پول ۱٬۴۳۳٫۳ میلیارد تومان، قدرت خریدار ۳٫۱۸ و تقاضای ۲۰۳٫۲ میلیون سهم ثبت شد. با وجود کیفیت مناسب Tape، قیمت فقط ۱٫۷۵٪ زیر سقف ۲۷٬۸۷۰ ریالی و ارزش معامله حدود ۴۳٪ میانگین ۳۰روزه است؛ ورود تعقیبی مناسب نیست. [داده نماد فملی](https://tindex.app/stocks/%D9%81%D9%85%D9%84%DB%8C/)
 
-Sources used for same-day market verification: current 2026-09-30 / 1405-07-08 market reports from Petrochemiha, Eghtesad Online, Nournews and other same-day cross-checks surfaced during the run.
+### ۵) فصبا
+
+ارزش معامله بالاتر از میانگین ۳۰روزه، قدرت خریدار ۷٫۵۷ و عرضه صفر بود. در مقابل، قیمت در سقف تازه ۵۲ هفته قرار دارد و طی یک ماه ۴۵٫۲٪ رشد کرده است. فقط پول‌بک و تثبیت بالای ۴٬۳۳۰ برای بررسی مجدد مناسب است. [داده نماد فصبا](https://tindex.app/stocks/%D9%81%D8%B5%D8%A8%D8%A7/)
+
+## نامزدهای خارج از Top 5
+
+- **شپنا — رتبه ۶:** نقدشوندگی و ورود پول مناسب، اما قدرت خریدار ۰٫۹۵ و عرضه بیشتر از تقاضا؛ `LIQUID_SUPPLY_WATCH`. [داده شپنا](https://tindex.app/stocks/%D8%B4%D9%BE%D9%86%D8%A7/)
+- **فخوز — رتبه ۷:** خروج پول ۱٬۶۳۱٫۸ میلیارد تومان، قدرت خریدار ۰٫۴۴ و عرضه بیش از ده برابر تقاضا نزدیک سقف سال؛ `DISTRIBUTION_WATCH`. [داده فخوز](https://tindex.app/stocks/%D9%81%D8%AE%D9%88%D8%B2/)
+- **وتجارت — رتبه ۸:** آخرین قیمت بالاتر از پایانی، اما خروج پول ۱٬۳۸۶٫۲ میلیارد تومان، قدرت خریدار ۰٫۸۷ و عرضه بیشتر؛ `DISTRIBUTION_WATCH`. [داده وتجارت](https://tindex.app/stocks/%D9%88%D8%AA%D8%AC%D8%A7%D8%B1%D8%AA/)
+
+## خروجی رسمی آستانه‌ها
+
+- **Best Early Candidate:** `NONE` — امتیاز بنیادی کانونی تأییدشده ≥۷۰ برای هیچ نامزد وجود ندارد.
+- **Best Momentum Hunter:** `NONE` — خودرو Tape و R/R مرجع لازم را داشت، اما امتیاز تکنیکال مستقلاً بازسازی نشده است.
+- **Best Potential Prime:** `NONE` — ترکیب کامل بنیاد کانونی، تکنیکال، Tape، R/R و ریسک خبر برای هیچ نماد تأیید نشد.
+
+## کیفیت داده و بنیاد پایدار
+
+اسکن ۱٬۱۶۲ نماد انجام و ۸ نامزد نگه داشته شد. کیفیت کلی `MEDIUM` است. قیمت، معامله، حقیقی/حقوقی و عمق بازار از صفحات هم‌تاریخ تیندکس با تصریح منبع TSETMC اخذ شد و شاخص کل با TGJU تطبیق داده شد. دسترسی مستقیم به endpointهای TSETMC فراهم نبود، جریان پول کل بازار تعارض داشت و شاخص هم‌وزن تأیید نشد.
+
+در مسیر کانونی `state/fundamentals/iran-stocks` هنوز baseline نمادی وجود ندارد. بنابراین هیچ امتیاز بنیادی ساخته یا روزانه تغییر داده نشد؛ انتشار گزارش‌های جدید فقط `FUNDAMENTAL_REVIEW_REQUIRED` ایجاد کرد. داده‌های سفارش لحظه‌ای هستند و پس از زمان گزارش می‌توانند تغییر کنند.
+
+این گزارش فهرست پایش و سناریوی ورود است، نه توصیه قطعی خرید یا فروش.
