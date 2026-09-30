@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "report_id": "2026-09-30-IR-TSE-1200",
+  "market": "iran_stock",
+  "generated_at": "2026-09-30T12:08:52+03:30",
+  "agent": {
+    "name": "Iran Stock Market Scout",
+    "workflow": "market-intelligence-hub/prompts/iran-stock-scout.md",
+    "run_type": "fallback safety run",
+    "prompt_version": "1.1",
+    "contract_version": "1.2"
+  },
+  "market_status": {
+    "tehran_trading_date": "1405-07-08",
+    "gregorian_date": "2026-09-30",
+    "status": "BULLISH_OVERHEATED",
+    "action_status": "SELECTIVE_NO_CHASE",
+    "index_snapshot": {
+      "tedpix": 7741244,
+      "tedpix_change_percent": 1.93,
+      "equal_weight_index": 2056849,
+      "equal_weight_change_percent": 1.32
+    },
+    "market_money_flow": {
+      "status": "DATA_CONFLICT",
+      "detail": "Same-day reports conflict on early-session versus mid-session real-person money flow. One reputable report described continued early-session outflow while another reported approximately 1.5 trillion toman inflow by mid-session; the exact figure was excluded from candidate ranking."
+    },
+    "breadth": "DATA_NOT_VERIFIED",
+    "trade_value": "DATA_NOT_VERIFIED",
+    "trade_volume": "DATA_NOT_VERIFIED",
+    "queues": "DATA_NOT_VERIFIED",
+    "summary": "The verified same-day market picture is strongly bullish: the total index reached a new 7.7 million-area record and the equal-weight index also advanced. Because symbol-level tape, technical stack, support/resistance and canonical fundamental state could not be verified comprehensively for the full market in this run, the Scout does not promote any symbol merely to fill the list."
+  },
+  "candidates": [],
+  "top_5": [],
+  "best_early_candidate": "NONE",
+  "best_momentum_hunter": "NONE",
+  "best_potential_prime": "NONE",
+  "data_quality": {
+    "status": "PARTIAL_VERIFIED_NO_QUALIFIED_CANDIDATE",
+    "continuity_rule_applied": true,
+    "fundamental_state_rule_applied": true,
+    "fundamental_scores_recomputed_daily": false,
+    "notes": [
+      "Same-day market-index data were verified from multiple current reports.",
+      "Exact market-wide real-person money flow was marked DATA_CONFLICT because same-day reports represented different intraday snapshots/directions.",
+      "Full-market symbol-level tape and technical data were not sufficiently verifiable in this run; no symbol was promoted from prior-day data.",
+      "No canonical Core Fundamental score was invented or changed.",
+      "NO QUALIFIED CANDIDATE is a valid result under the shared analysis contract."
+    ]
+  }
+}
